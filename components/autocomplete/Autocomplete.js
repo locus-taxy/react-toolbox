@@ -276,7 +276,7 @@ const factory = (Chip, Input) => {
            onMouseDown={this.select}
            onMouseOver={this.handleSuggestionHover}
          >
-           {this.props.template?this.props.template(value):value}
+           {this.props.template?this.props.template(key, value):value}
          </li>
        );
      });
@@ -285,7 +285,7 @@ const factory = (Chip, Input) => {
      return <ul ref='suggestions' className={className}>{suggestions}</ul>;
    }
 
-   renderTemplateValue(selected){
+   renderTemplateValue(key, value){
     const { theme } = this.props;
       const className = classnames(theme.field, {
         [theme.errored]: this.props.error,
@@ -297,7 +297,7 @@ const factory = (Chip, Input) => {
           {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
 
           <div className={`${theme.templateValue} ${theme.value}`}>
-            {this.props.template(selected)}
+            {this.props.template(key, value)}
           </div>
 
           {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
@@ -317,6 +317,9 @@ const factory = (Chip, Input) => {
      const className = classnames(theme.autocomplete, {
        [theme.focus]: this.state.focus
      }, this.props.className);
+     const currentSuggestion = [...this.suggestions()].filter(([key, value]) => {
+      return value === this.state.query;
+     })[0];
      return (
        <div data-react-toolbox='autocomplete' className={className}>
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
@@ -333,7 +336,7 @@ const factory = (Chip, Input) => {
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query}
          />
-         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.state.query): null }
+         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(currentSuggestion[0], this.state.query): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
