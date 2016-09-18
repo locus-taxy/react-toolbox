@@ -38,9 +38,14 @@ const factory = (Chip, Input) => {
        suggestions: PropTypes.string,
        up: PropTypes.string,
        value: PropTypes.string,
-       values: PropTypes.string
+       values: PropTypes.string,
+       field: PropTypes.string,
+       errored: PropTypes.string,
+       disabled: PropTypes.string,
+       error: PropTypes.string
      }),
-     value: PropTypes.any
+     value: PropTypes.any,
+     template: PropTypes.func
    };
 
    static defaultProps = {
@@ -271,7 +276,7 @@ const factory = (Chip, Input) => {
            onMouseDown={this.select}
            onMouseOver={this.handleSuggestionHover}
          >
-           {value}
+           {this.props.template?this.props.template(value):value}
          </li>
        );
      });
@@ -280,23 +285,45 @@ const factory = (Chip, Input) => {
      return <ul ref='suggestions' className={className}>{suggestions}</ul>;
    }
 
+   renderTemplateValue(selected){
+    const { theme } = this.props;
+      const className = classnames(theme.field, {
+        [theme.errored]: this.props.error,
+        [theme.disabled]: this.props.disabled
+      });
+
+      return (
+        <div className={className} onClick={this.handleClick}>
+          {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
+
+          <div className={`${theme.templateValue} ${theme.value}`}>
+            {this.props.template(selected)}
+          </div>
+
+          {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
+        </div>
+      );
+   }
+   handleClick = (event)=>{
+    event.preventDefault();
+    this.refs.input.getWrappedInstance().focus()
+   }
    render () {
      const {
       allowCreate, error, label, source, suggestionMatch, //eslint-disable-line no-unused-vars
       selectedPosition, showSuggestionsWhenValueIsSet,    //eslint-disable-line no-unused-vars
-      theme, ...other
+      theme, template, ...other
     } = this.props;
      const className = classnames(theme.autocomplete, {
        [theme.focus]: this.state.focus
      }, this.props.className);
-
      return (
        <div data-react-toolbox='autocomplete' className={className}>
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
          <Input
            {...other}
            ref='input'
-           className={theme.input}
+           className={classnames(theme.input,{[theme.hidden]:(template && this.state.query && !this.state.focus)})}
            error={error}
            label={label}
            onBlur={this.handleQueryBlur}
@@ -306,6 +333,7 @@ const factory = (Chip, Input) => {
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query}
          />
+         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.state.query): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
