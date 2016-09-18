@@ -292,7 +292,7 @@ const factory = (Chip, Input) => {
 
    renderTemplateValue(key, value){
     const { theme } = this.props;
-      const className = classnames(theme.field, {
+      const className = classnames(theme.templateField, {
         [theme.errored]: this.props.error,
         [theme.disabled]: this.props.disabled
       });
