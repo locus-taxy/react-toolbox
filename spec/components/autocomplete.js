@@ -29,7 +29,6 @@ class AutocompleteTest extends React.Component {
     this.setState({simpleShowAll: value});
   };
   template(key, value){
-    console.log(key, value);
     return <div> { key + ', ' + value} </div>
   }
   render () {

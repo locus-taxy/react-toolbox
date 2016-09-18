@@ -142,8 +142,12 @@ const factory = (Chip, Input) => {
      }
    };
 
-   handleSuggestionHover = (event) => {
+   handleSuggestionMouseEnter = (event) => {
      this.setState({active: event.target.id});
+   };
+
+   handleSuggestionMouseLeave = (event) => {
+     this.setState({active: ''});
    };
 
    calculateDirection () {
@@ -233,7 +237,7 @@ const factory = (Chip, Input) => {
    select = (event, target) => {
      events.pauseEvent(event);
      const values = this.values(this.props.value);
-     const newValue = target === void 0 ? event.target.id : target;
+     const newValue = target === void 0 ? event.currentTarget.id : target;
      this.handleChange([newValue, ...values.keys()], event);
    };
 
@@ -267,14 +271,15 @@ const factory = (Chip, Input) => {
    renderSuggestions () {
      const { theme } = this.props;
      const suggestions = [...this.suggestions()].map(([key, value]) => {
-       const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
+     const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
        return (
          <li
            id={key}
            key={key}
            className={className}
-           onMouseDown={this.select}
-           onMouseOver={this.handleSuggestionHover}
+           onMouseDown = {this.select}
+           onMouseEnter={this.handleSuggestionMouseEnter}
+           onMouseLeave={this.handleSuggestionMouseLeave}
          >
            {this.props.template?this.props.template(key, value):value}
          </li>
@@ -320,6 +325,7 @@ const factory = (Chip, Input) => {
      const currentSuggestion = [...this.suggestions()].filter(([key, value]) => {
       return value === this.state.query;
      })[0];
+     var currentKey = currentSuggestion? currentSuggestion[0]:this.state.query;
      return (
        <div data-react-toolbox='autocomplete' className={className}>
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
@@ -336,7 +342,7 @@ const factory = (Chip, Input) => {
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query}
          />
-         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(currentSuggestion[0], this.state.query): null }
+         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(currentKey, this.state.query): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
