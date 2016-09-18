@@ -28,7 +28,9 @@ class AutocompleteTest extends React.Component {
   handleSimpleShowAllChange = (value) => {
     this.setState({simpleShowAll: value});
   };
-
+  template(value){
+    return <div> {value?value + ' hi ':'no potatoes'} </div>
+  }
   render () {
     return (
       <section>
@@ -61,6 +63,8 @@ class AutocompleteTest extends React.Component {
           showSuggestionsWhenValueIsSet
           source={this.state.countriesArray}
           value={this.state.simpleShowAll}
+          template = {this.template}
+          allowCreate = {true}
         />
       </section>
     );

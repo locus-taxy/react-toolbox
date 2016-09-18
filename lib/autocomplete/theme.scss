@@ -19,6 +19,9 @@
   }
 }
 
+.field{
+
+}
 .label {
   font-size: $font-size-tiny;
   color: $color-text-secondary;
@@ -67,6 +70,10 @@
 
 .input {
   position: relative;
+  &.hidden{
+    opacity: 0;
+    position: absolute;
+  }
   &:after {
     $size: ($input-field-height / 7);
     $border: $size solid transparent;
