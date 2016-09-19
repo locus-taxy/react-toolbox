@@ -311,7 +311,7 @@ const factory = (Chip, Input) => {
    }
    handleClick = (event)=>{
     event.preventDefault();
-    this.refs.input.getWrappedInstance().focus()
+    ReactDOM.findDOMNode(this).querySelector('input').focus();
    }
    render () {
      const {
