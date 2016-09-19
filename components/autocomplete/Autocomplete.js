@@ -197,7 +197,9 @@ const factory = (Chip, Input) => {
      } else {
        suggest = source;
      }
-
+     if(this.props.allowCreate && rawQuery){
+      suggest.set('new', rawQuery)
+     }
      return suggest;
    }
 
@@ -342,7 +344,7 @@ const factory = (Chip, Input) => {
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query}
          />
-         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(currentKey, this.state.query): null }
+         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue('new', this.state.query): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
