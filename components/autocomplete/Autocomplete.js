@@ -45,7 +45,9 @@ const factory = (Chip, Input) => {
        error: PropTypes.string
      }),
      value: PropTypes.any,
-     template: PropTypes.func
+     template: PropTypes.func,
+     customMatcher: PropTypes.func, 
+     valueDisplayField: PropTypes.string
    };
 
    static defaultProps = {
@@ -166,6 +168,9 @@ const factory = (Chip, Input) => {
       if (!this.props.multiple && key) {
         const source_value = this.source().get(key);
         query_value = source_value ? source_value : key;
+        if(this.props.valueDisplayField){
+          query_value = query_value[this.props.valueDisplayField];
+        }
       }
       return query_value;
     }
@@ -188,9 +193,15 @@ const factory = (Chip, Input) => {
      // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
      } else if (query && !this.state.showAllSuggestions) {
        for (const [key, value] of source) {
+          if(this.props.customMatcher){
+              if(this.props.customMatcher(key, value, query)){
+                suggest.set(key, value);
+              }
+          } else {
          if (this.matches(value.toLowerCase().trim(), query)) {
            suggest.set(key, value);
          }
+       }
        }
 
      // When multiple is false, suggest all values when showAllSuggestions is true
@@ -268,6 +279,7 @@ const factory = (Chip, Input) => {
 
        return <ul className={this.props.theme.values}>{selectedItems}</ul>;
      }
+
    }
 
    renderSuggestions () {
@@ -283,7 +295,7 @@ const factory = (Chip, Input) => {
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
-           {this.props.template?this.props.template(key, value):value}
+           {this.props.template?this.props.template(value):value}
          </li>
        );
      });
@@ -292,7 +304,7 @@ const factory = (Chip, Input) => {
      return <ul ref='suggestions' className={className}>{suggestions}</ul>;
    }
 
-   renderTemplateValue(key, value){
+   renderTemplateValue(value){
     const { theme } = this.props;
       const className = classnames(theme.templateField, {
         [theme.errored]: this.props.error,
@@ -304,7 +316,7 @@ const factory = (Chip, Input) => {
           {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
 
           <div className={`${theme.templateValue} ${theme.value}`}>
-            {this.props.template(key, value)}
+            {this.props.template(value)}
           </div>
 
           {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
@@ -334,7 +346,7 @@ const factory = (Chip, Input) => {
          <Input
            {...other}
            ref='input'
-           className={classnames(theme.input,{[theme.hidden]:(template && this.state.query && !this.state.focus)})}
+           className={classnames(theme.input)}
            error={error}
            label={label}
            onBlur={this.handleQueryBlur}
@@ -342,9 +354,8 @@ const factory = (Chip, Input) => {
            onFocus={this.handleQueryFocus}
            onKeyDown={this.handleQueryKeyDown}
            onKeyUp={this.handleQueryKeyUp}
-           value={this.state.query}
-         />
-         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue('new', this.state.query): null }
+           value={this.state.query} />
+         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.state.query): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
