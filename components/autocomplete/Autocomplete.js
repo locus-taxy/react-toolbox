@@ -123,13 +123,14 @@ const factory = (Chip, Input) => {
 
    handleQueryKeyUp = (event) => {
      if (event.which === 13) {
-       let target = this.state.active;
+       let target = this.props.allowCreate?this.state.query:this.state.active;
        if (!target) {
          target = this.props.allowCreate
            ? this.state.query
            : [...this.suggestions().keys()][0];
          this.setState({active: target});
        }
+       console.log(this.state.query, this.state.active);
        this.select(event, target);
      }
 
@@ -209,6 +210,7 @@ const factory = (Chip, Input) => {
        suggest = source;
      }
      if(this.props.allowCreate && rawQuery){
+      suggest.delete('new')
       suggest.set('new', rawQuery)
      }
      return suggest;
@@ -286,12 +288,17 @@ const factory = (Chip, Input) => {
      const { theme } = this.props;
      const suggestions = [...this.suggestions()].map(([key, value]) => {
      const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
+     let target = this.props.allowCreate && key === 'new'
+           ? this.state.query
+           : null;
+
+    var onMouseDown = target?this.select.bind(null, target): this.select;
        return (
          <li
            id={key}
            key={key}
            className={className}
-           onMouseDown = {this.select}
+           onMouseDown = {onMouseDown}
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
@@ -339,7 +346,7 @@ const factory = (Chip, Input) => {
      const currentSuggestion = [...this.suggestions()].filter(([key, value]) => {
       return value === this.state.query;
      })[0];
-     var currentKey = currentSuggestion? currentSuggestion[0]:this.state.query;
+     var currentKey = currentSuggestion? currentSuggestion[0]:'new';
      return (
        <div data-react-toolbox='autocomplete' className={className}>
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}

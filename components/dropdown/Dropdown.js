@@ -36,10 +36,7 @@ const factory = (Input) => {
         value: PropTypes.string,
         values: PropTypes.string
       }),
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-      ])
+      value: PropTypes.any
     };
 
     static defaultProps = {
