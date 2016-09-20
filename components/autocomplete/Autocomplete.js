@@ -275,15 +275,17 @@ const factory = (Chip, Input) => {
      const { theme } = this.props;
      const suggestions = [...this.suggestions()].map(([key, value]) => {
      const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
-     let target = this.props.allowCreate
+     let target = this.props.allowCreate && key === 'new'
            ? this.state.query
            : null;
+
+    var onMouseDown = target?this.select.bind(null, target): this.select;
        return (
          <li
            id={key}
            key={key}
            className={className}
-           onMouseDown = {target?this.select.bind(null, target): this.select}
+           onMouseDown = {onMouseDown}
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
