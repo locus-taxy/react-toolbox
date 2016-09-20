@@ -121,13 +121,14 @@ const factory = (Chip, Input) => {
 
    handleQueryKeyUp = (event) => {
      if (event.which === 13) {
-       let target = this.state.active;
+       let target = this.props.allowCreate?this.state.query:this.state.active;
        if (!target) {
          target = this.props.allowCreate
            ? this.state.query
            : [...this.suggestions().keys()][0];
          this.setState({active: target});
        }
+       console.log(this.state.query, this.state.active);
        this.select(event, target);
      }
 
