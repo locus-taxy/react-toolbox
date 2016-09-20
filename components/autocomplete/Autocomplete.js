@@ -130,7 +130,6 @@ const factory = (Chip, Input) => {
            : [...this.suggestions().keys()][0];
          this.setState({active: target});
        }
-       console.log(this.state.query, this.state.active);
        this.select(event, target);
      }
 
@@ -209,10 +208,6 @@ const factory = (Chip, Input) => {
      } else {
        suggest = source;
      }
-     if(this.props.allowCreate && rawQuery){
-      suggest.delete('new')
-      suggest.set('new', rawQuery)
-     }
      return suggest;
    }
 
@@ -286,12 +281,15 @@ const factory = (Chip, Input) => {
 
    renderSuggestions () {
      const { theme } = this.props;
-     const suggestions = [...this.suggestions()].map(([key, value]) => {
-     const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
+     var hasPerfectMatch = false;
+     var suggestions = [...this.suggestions()].map(([key, value]) => {
+     var className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
      let target = this.props.allowCreate && key === 'new'
            ? this.state.query
            : null;
-
+    if(this.state.query.trim() == key){
+      hasPerfectMatch = true;
+    }
     var onMouseDown = target?this.select.bind(null, target): this.select;
        return (
          <li
@@ -306,7 +304,21 @@ const factory = (Chip, Input) => {
          </li>
        );
      });
-
+    var customClassName = classnames(theme.suggestion, {[theme.active]: this.state.active === this.state.query});
+     let target = this.props.allowCreate? this.state.query: null;
+     var onMouseDown = target?this.select.bind(null, target): this.select;
+     if(!hasPerfectMatch && this.state.query){
+        suggestions = [<li
+           id={this.state.query}
+           key={this.state.query}
+           className={customClassName}
+           onMouseDown = {onMouseDown}
+           onMouseEnter={this.handleSuggestionMouseEnter}
+           onMouseLeave={this.handleSuggestionMouseLeave}
+         >
+           Custom: {this.state.query}
+         </li>].concat(suggestions);
+     }
      const className = classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'});
      return <ul ref='suggestions' className={className}>{suggestions}</ul>;
    }
@@ -323,7 +335,7 @@ const factory = (Chip, Input) => {
           {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
 
           <div className={`${theme.templateValue} ${theme.value}`}>
-            {this.props.template(value)}
+            Custom: {value}
           </div>
 
           {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
