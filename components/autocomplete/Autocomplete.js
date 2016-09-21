@@ -123,7 +123,7 @@ const factory = (Chip, Input) => {
 
    handleQueryKeyUp = (event) => {
      if (event.which === 13) {
-       let target = this.props.allowCreate?this.state.query:this.state.active;
+       let target = this.state.active;
        if (!target) {
          target = this.props.allowCreate
            ? this.state.query
@@ -284,19 +284,15 @@ const factory = (Chip, Input) => {
      var hasPerfectMatch = false;
      var suggestions = [...this.suggestions()].map(([key, value]) => {
      var className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
-     let target = this.props.allowCreate
-           ? this.state.query
-           : null;
     if(this.state.query && this.state.query.trim() == key){
       hasPerfectMatch = true;
     }
-    var onMouseDown = target?this.select.bind(null, target): this.select;
        return (
          <li
            id={key}
            key={key}
            className={className}
-           onMouseDown = {onMouseDown}
+           onMouseDown = {this.select}
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
@@ -305,14 +301,13 @@ const factory = (Chip, Input) => {
        );
      });
     var customClassName = classnames(theme.suggestion, {[theme.active]: this.state.active === this.state.query});
-     let target = this.props.allowCreate? this.state.query: null;
-     var onMouseDown = target?this.select.bind(null, target): this.select;
-     if(!hasPerfectMatch && this.state.query){
+
+     if(!hasPerfectMatch && this.state.query && this.props.allowCreate){
         suggestions = [<li
            id={this.state.query}
            key={this.state.query}
            className={customClassName}
-           onMouseDown = {onMouseDown}
+           onMouseDown = {this.select.bind(null, this.state.query)}
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
@@ -343,7 +338,6 @@ const factory = (Chip, Input) => {
       );
    }
    handleClick = (event)=>{
-    event.preventDefault();
     ReactDOM.findDOMNode(this).querySelector('input').focus();
    }
    render () {
@@ -370,7 +364,7 @@ const factory = (Chip, Input) => {
            onKeyDown={this.handleQueryKeyDown}
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query} />
-         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.source().get(this.state.query)): null }
+         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.source().get(this.props.value)): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
