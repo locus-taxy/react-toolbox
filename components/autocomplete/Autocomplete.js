@@ -117,7 +117,8 @@ const factory = (Chip, Input) => {
        && this.state.showAllSuggestions
      );
      if (shouldClearQuery) {
-       this.setState({query: '', value: '', active:''});
+       this.setState({query: '', active:''});
+       this.unselect(this.props.value, event);
      }
    };
 
