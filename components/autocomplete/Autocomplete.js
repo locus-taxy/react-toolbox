@@ -46,7 +46,7 @@ const factory = (Chip, Input) => {
      }),
      value: PropTypes.any,
      template: PropTypes.func,
-     customMatcher: PropTypes.func, 
+     customMatcher: PropTypes.func,
      valueDisplayField: PropTypes.string
    };
 
@@ -284,7 +284,7 @@ const factory = (Chip, Input) => {
      var hasPerfectMatch = false;
      var suggestions = [...this.suggestions()].map(([key, value]) => {
      var className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
-     let target = this.props.allowCreate 
+     let target = this.props.allowCreate
            ? this.state.query
            : null;
     if(this.state.query && this.state.query.trim() == key){
@@ -316,7 +316,7 @@ const factory = (Chip, Input) => {
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
-           Custom: {this.state.query}
+           {this.props.template(this.state.query, true)}
          </li>].concat(suggestions);
      }
      const className = classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'});
@@ -335,7 +335,7 @@ const factory = (Chip, Input) => {
           {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
 
           <div className={`${theme.templateValue} ${theme.value}`}>
-            Custom: {value}
+            this.props.template(value);
           </div>
 
           {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}

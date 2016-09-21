@@ -8,7 +8,9 @@ class AutocompleteTest extends React.Component {
     multiple: ['ES-es', 'TH-th'],
     countriesArray: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
     countriesObject: {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England',
-      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'}
+      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'},
+    countriesObject2: {'ES-es': {'displayName':'palash', 'alias': 'pk'}, 'ES-ea': {'displayName':'padsafsdflash', 'alias': 'fg'}, 'ES-en': {'displayName':'e564334', 'alias': 'gfdga'}, 'ES-s': {'displayName':'4213421', 'alias': '45'}, }
+
   };
 
   handleMultipleChange = (value) => {
@@ -61,11 +63,14 @@ class AutocompleteTest extends React.Component {
           label="Choose a country (showing all suggestions)"
           multiple={false}
           onChange={this.handleSimpleShowAllChange}
-          showSuggestionsWhenValueIsSet
-          source={this.state.countriesObject}
-          value={this.state.simpleShowAll}
           template = {this.template}
-          allowCreate = {true}
+          source={this.state.countriesObject2}
+          value={'pk'}
+          showSuggestionsWhenValueIsSet={true}
+          multiple={false}
+          valueDisplayField="displayName"
+
+          />
         />
       </section>
     );
