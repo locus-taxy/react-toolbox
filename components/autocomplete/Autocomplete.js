@@ -130,7 +130,7 @@ const factory = (Chip, Input) => {
            : [...this.suggestions().keys()][0];
          this.setState({active: target});
        }
-       this.select(target, event);
+       this.select(event, target);
      }
 
      if (event.which === 27) ReactDOM.findDOMNode(this).querySelector('input').blur();
@@ -244,7 +244,7 @@ const factory = (Chip, Input) => {
      return valueMap;
    }
 
-   select = (target, event) => {
+   select = (event, target) => {
      events.pauseEvent(event);
      const values = this.values(this.props.value);
      const newValue = target === void 0 ? event.currentTarget.id : target;
@@ -307,7 +307,7 @@ const factory = (Chip, Input) => {
            id={this.state.query}
            key={this.state.query}
            className={customClassName}
-           onMouseDown = {this.select.bind(this, this.state.query)}
+           onMouseDown = {(event)=>{this.select(event,this.state.query)}}
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
