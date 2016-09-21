@@ -364,7 +364,7 @@ const factory = (Chip, Input) => {
          <Input
            {...other}
            ref='input'
-           className={classnames(theme.input)}
+           className={classnames(theme.input, {[theme.hidden]:(template && this.state.query && !this.state.focus)})}
            error={error}
            label={label}
            onBlur={this.handleQueryBlur}
