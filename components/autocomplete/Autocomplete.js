@@ -168,7 +168,7 @@ const factory = (Chip, Input) => {
       if (!this.props.multiple && key) {
         const source_value = this.source().get(key);
         query_value = source_value ? source_value : key;
-        if(this.props.valueDisplayField){
+        if(typeof query_value === 'object' && this.props.valueDisplayField){
           query_value = query_value[this.props.valueDisplayField];
         }
       }
@@ -284,10 +284,10 @@ const factory = (Chip, Input) => {
      var hasPerfectMatch = false;
      var suggestions = [...this.suggestions()].map(([key, value]) => {
      var className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
-     let target = this.props.allowCreate && key === 'new'
+     let target = this.props.allowCreate 
            ? this.state.query
            : null;
-    if(this.state.query.trim() == key){
+    if(this.state.query && this.state.query.trim() == key){
       hasPerfectMatch = true;
     }
     var onMouseDown = target?this.select.bind(null, target): this.select;
@@ -358,7 +358,6 @@ const factory = (Chip, Input) => {
      const currentSuggestion = [...this.suggestions()].filter(([key, value]) => {
       return value === this.state.query;
      })[0];
-     var currentKey = currentSuggestion? currentSuggestion[0]:'new';
      return (
        <div data-react-toolbox='autocomplete' className={className}>
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
