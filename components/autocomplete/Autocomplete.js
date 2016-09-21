@@ -355,9 +355,6 @@ const factory = (Chip, Input) => {
      const className = classnames(theme.autocomplete, {
        [theme.focus]: this.state.focus
      }, this.props.className);
-     const currentSuggestion = [...this.suggestions()].filter(([key, value]) => {
-      return value === this.state.query;
-     })[0];
      return (
        <div data-react-toolbox='autocomplete' className={className}>
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
@@ -373,7 +370,7 @@ const factory = (Chip, Input) => {
            onKeyDown={this.handleQueryKeyDown}
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query} />
-         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.state.query): null }
+         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.source().get(this.state.query)): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
