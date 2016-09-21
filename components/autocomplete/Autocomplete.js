@@ -335,7 +335,7 @@ const factory = (Chip, Input) => {
           {this.props.label ? <label className={theme.label}>{this.props.label}</label> : null}
 
           <div className={`${theme.templateValue} ${theme.value}`}>
-            this.props.template(value);
+            {this.props.template(value)}
           </div>
 
           {this.props.error ? <span className={theme.error}>{this.props.error}</span> : null}
