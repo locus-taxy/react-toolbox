@@ -105,7 +105,7 @@ const factory = (Chip, Input) => {
    };
 
    handleQueryFocus = () => {
-     this.refs.suggestions.scrollTop = 0;
+     if(_this.refs && _this.refs.suggestions) this.refs.suggestions.scrollTop = 0;
      this.setState({active: '', focus: true});
    };
 
