@@ -350,13 +350,14 @@ const factory = (Chip, Input) => {
      const className = classnames(theme.autocomplete, {
        [theme.focus]: this.state.focus
      }, this.props.className);
+     const renderTemplate = template && this.source().get(this.props.value) && !this.state.focus;
      return (
        <div data-react-toolbox='autocomplete' className={className}>
          {this.props.selectedPosition === 'above' ? this.renderSelected() : null}
          <Input
            {...other}
            ref='input'
-           className={classnames(theme.input, {[theme.hidden]:(template && this.state.query && !this.state.focus)})}
+           className={classnames(theme.input, {[theme.hidden]:renderTemplate})}
            error={error}
            label={label}
            onBlur={this.handleQueryBlur}
@@ -365,7 +366,7 @@ const factory = (Chip, Input) => {
            onKeyDown={this.handleQueryKeyDown}
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query} />
-         {(template && this.state.query && !this.state.focus)? this.renderTemplateValue(this.source().get(this.props.value)): null }
+         {renderTemplate? this.renderTemplateValue(this.source().get(this.props.value)): null }
          {this.renderSuggestions()}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
