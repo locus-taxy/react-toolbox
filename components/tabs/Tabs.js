@@ -43,7 +43,7 @@ const factory = (Tab, TabContent) => {
     }
 
     componentWillReceiveProps (nextProps) {
-      !this.props.disableAnimatedBottomBorder && this.updatePointer(nextProps.index);
+      if(this.props.index != nextProps.index) !this.props.disableAnimatedBottomBorder && this.updatePointer(nextProps.index);
     }
 
     componentWillUnmount () {
