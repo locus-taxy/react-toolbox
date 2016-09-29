@@ -367,7 +367,7 @@ const factory = (Chip, Input) => {
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query} />
          {renderTemplate? this.renderTemplateValue(this.source().get(this.props.value)): null }
-         {this.renderSuggestions()}
+         {this.state.focus?this.renderSuggestions():null}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
      );
