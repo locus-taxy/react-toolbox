@@ -55,23 +55,23 @@ const factory = (FontIcon) => {
     };
 
     componentDidMount () {
-      if (this.props.multiline) {
+      if (this.props.multiline && this.props.autoResize) {
         window.addEventListener('resize', this.handleAutoresize);
         this.handleAutoresize();
       }
     }
 
     componentWillReceiveProps (nextProps) {
-      if (!this.props.multiline && nextProps.multiline) {
+      if (!this.props.multiline && nextProps.multiline && nextProps.autoResize) {
         window.addEventListener('resize', this.handleAutoresize);
-      } else if (this.props.multiline && !nextProps.multiline) {
+      } else if (this.props.multiline && !nextProps.multiline && !nextProps.autoResize) {
         window.removeEventListener('resize', this.handleAutoresize);
       }
     }
 
     componentDidUpdate () {
       // resize the textarea, if nessesary
-      if (this.props.multiline) this.handleAutoresize();
+      if (this.props.multiline && this.props.autoResize) this.handleAutoresize();
     }
 
     componentWillUnmount () {
