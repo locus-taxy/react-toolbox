@@ -316,9 +316,17 @@ const factory = (Chip, Input) => {
          </li>].concat(suggestions);
      }
      const className = classnames(theme.suggestions, {[theme.up]: this.state.direction === 'up'});
-     return <ul ref='suggestions' className={className}>{suggestions}</ul>;
+     return <ul ref='suggestions' className={className} onMouseEnter={this.handleSuggestionsMouseEnter} onMouseLeave={this.handleSuggestionsMouseLeave} onMouseDown={this.handleSuggestionsClick}>{suggestions}</ul>;
    }
-
+   handleSuggestionsMouseEnter = (event) => {
+    this.setState({showSuggestions:true});
+   }
+   handleSuggestionsMouseLeave = (event) => {
+    this.setState({showSuggestions:false});
+   }
+   handleSuggestionsClick = (event) =>{
+    event.preventDefault();
+   }
    renderTemplateValue(value){
     const { theme } = this.props;
       const className = classnames(theme.templateField, {
@@ -367,7 +375,7 @@ const factory = (Chip, Input) => {
            onKeyUp={this.handleQueryKeyUp}
            value={this.state.query} />
          {renderTemplate? this.renderTemplateValue(this.source().get(this.props.value)): null }
-         {this.state.focus?this.renderSuggestions():null}
+         {this.state.focus || this.state.showSuggestions?this.renderSuggestions():null}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
      );
