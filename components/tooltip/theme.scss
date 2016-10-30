@@ -15,7 +15,6 @@
   line-height: $font-size-small;
   text-align: center;
   text-transform: none;
-  pointer-events: none;
   transition: $animation-curve-default $tooltip-animation-duration transform;
   transform: scale(0) translateX(-50%);
   transform-origin: top left;

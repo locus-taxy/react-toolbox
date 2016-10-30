@@ -20,7 +20,9 @@ const defaults = {
   delay: 0,
   hideOnClick: true,
   position: POSITION.VERTICAL,
-  theme: {}
+  theme: {},
+  hideOnHover: true,
+  hideDelay: 0
 };
 
 const tooltipFactory = (options = {}) => {
@@ -29,7 +31,9 @@ const tooltipFactory = (options = {}) => {
     delay: defaultDelay,
     hideOnClick: defaultHideOnClick,
     position: defaultPosition,
-    theme: defaultTheme
+    theme: defaultTheme,
+    hideOnHover: defaultHideOnHover,
+    hideDelay: defaultHideDelay
   } = {...defaults, ...options};
 
   return ComposedComponent => {
@@ -48,20 +52,25 @@ const tooltipFactory = (options = {}) => {
         tooltip: PropTypes.any,
         tooltipDelay: PropTypes.number,
         tooltipHideOnClick: PropTypes.bool,
-        tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key]))
+        tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key])),
+        tooltipHideOnHover: PropTypes.bool,
+        tooltipHideDelay: PropTypes.number
       };
 
       static defaultProps = {
         className: defaultClassName,
         tooltipDelay: defaultDelay,
         tooltipHideOnClick: defaultHideOnClick,
-        tooltipPosition: defaultPosition
+        tooltipPosition: defaultPosition,
+        tooltipHideOnHover: defaultHideOnHover,
+        tooltipHideDelay: defaultHideDelay
       };
 
       state = {
         active: false,
         position: this.props.tooltipPosition,
-        visible: false
+        visible: false,
+        tooltipHovered: false
       };
 
       componentWillUnmount () {
@@ -81,7 +90,7 @@ const tooltipFactory = (options = {}) => {
       deactivate () {
         if (this.timeout) clearTimeout(this.timeout);
         if (this.state.active) {
-          events.addEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
+          if(this.refs && this.refs.tooltip) events.addEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
           this.setState({ active: false });
         } else if (this.state.visible) {
           this.setState({ visible: false });
@@ -150,9 +159,35 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseLeave = (event) => {
-        this.deactivate();
+        if(this.props.tooltipHideOnHover){
+              this.deactivate();
+        }
+        else{ // if we don't want to hide tooltip on hover
+          // give timeout
+          if(this.hoverTimeout) clearTimeout(this.hoverTimeout)
+          this.hoverTimeout = setTimeout(() => {
+            if(!this.state.tooltipHovered){ //check if the mouse enterd the tooltip
+              this.deactivate();
+              }
+            }, this.props.tooltipHideDelay);
+        }
+
         if (this.props.onMouseLeave) this.props.onMouseLeave(event);
       };
+
+      handleTooltipMouseEnter = (event) => {
+        if(!this.props.tooltipHideOnHover){
+          this.setState({tooltipHovered:true});
+        }
+      }
+
+      handleTooltipMouseLeave = (event) => {
+        if(!this.props.tooltipHideOnHover){
+          this.setState({tooltipHovered:false}, ()=>{
+            this.deactivate();
+          });
+        }
+      }
 
       handleClick = (event) => {
         if (this.props.tooltipHideOnClick) this.deactivate();
@@ -170,6 +205,7 @@ const tooltipFactory = (options = {}) => {
           tooltipDelay,       //eslint-disable-line no-unused-vars
           tooltipHideOnClick, //eslint-disable-line no-unused-vars
           tooltipPosition,    //eslint-disable-line no-unused-vars
+          tooltipHideOnHover, //eslint-disable-line no-unused-vars
           ...other
         } = this.props;
 
@@ -190,9 +226,9 @@ const tooltipFactory = (options = {}) => {
             {children ? children : null}
             {visible && (
               <Portal>
-                <span ref="tooltip" className={_className} data-react-toolbox="tooltip" style={{top, left}}>
+                {tooltip !== null?<span ref="tooltip" onMouseEnter={this.handleTooltipMouseEnter} onMouseLeave={this.handleTooltipMouseLeave} className={_className} data-react-toolbox="tooltip" style={{top, left}}>
                   <span className={theme.tooltipInner}>{tooltip}</span>
-                </span>
+                </span>:null}
               </Portal>
             )}
           </ComposedComponent>
