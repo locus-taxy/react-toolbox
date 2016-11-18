@@ -34,6 +34,16 @@ const factory = (Overlay, Button) => {
       type: PropTypes.oneOf([ 'accept', 'cancel', 'warning' ])
     };
 
+    constructor(props){
+      super(props);
+      if (props.active && props.timeout) {
+        if (this.curTimeout) clearTimeout(this.curTimeout);
+        this.curTimeout = setTimeout(() => {
+          props.onTimeout();
+          this.curTimeout = null;
+        }, props.timeout);
+      }
+    }
     componentWillReceiveProps (nextProps) {
       if (nextProps.active && nextProps.timeout) {
         if (this.curTimeout) clearTimeout(this.curTimeout);
