@@ -22,7 +22,8 @@ const defaults = {
   position: POSITION.VERTICAL,
   theme: {},
   hideOnHover: true,
-  hideDelay: 0
+  hideDelay: 0,
+  tooltipClassName: ''
 };
 
 const tooltipFactory = (options = {}) => {
@@ -33,7 +34,8 @@ const tooltipFactory = (options = {}) => {
     position: defaultPosition,
     theme: defaultTheme,
     hideOnHover: defaultHideOnHover,
-    hideDelay: defaultHideDelay
+    hideDelay: defaultHideDelay,
+    tooltipClassName: defaultTooltipClassName
   } = {...defaults, ...options};
 
   return ComposedComponent => {
@@ -206,10 +208,11 @@ const tooltipFactory = (options = {}) => {
           tooltipHideOnClick, //eslint-disable-line no-unused-vars
           tooltipPosition,    //eslint-disable-line no-unused-vars
           tooltipHideOnHover, //eslint-disable-line no-unused-vars
+          tooltipClassName,
           ...other
         } = this.props;
 
-        const _className = classnames(theme.tooltip, {
+        const _className = classnames(theme.tooltip, tooltipClassName, {
           [theme.tooltipActive]: active,
           [theme[positionClass]]: theme[positionClass]
         });
