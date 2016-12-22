@@ -69,15 +69,19 @@ const factory = (Input) => {
       }
     }
 
+    open = (up) => {
+      this.setState({active: true, up});
+      this.props.onShow && this.props.onShow();
+    }
+
     close = () => {
-      if (this.state.active) {
-        this.setState({active: false});
-      }
+      this.setState({active: false});
+      this.props.onHide && this.props.onHide();
     }
 
     handleDocumentClick = (event) => {
       if (this.state.active && !events.targetIsDescendant(event, ReactDOM.findDOMNode(this))) {
-        this.setState({active: false});
+          this.close();
       }
     };
 
@@ -88,7 +92,12 @@ const factory = (Input) => {
       const up = this.props.auto ? client.top > ((screen_height / 2) + client.height) : false;
       if (this.props.onClick) this.props.onClick(event);
       if (this.props.onFocus) this.props.onFocus(event);
-      this.setState({active: true, up});
+      if(!this.state.active) {
+        this.open(up);
+      }
+      else {
+        this.close();
+      }
     };
 
     handleSelect = (item, event) => {
@@ -98,7 +107,7 @@ const factory = (Input) => {
           event.target.name = this.props.name;
         }
         this.props.onChange(item, event);
-        this.setState({active: false});
+        this.close();
       }
     };
 
