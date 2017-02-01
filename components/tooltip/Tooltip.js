@@ -58,7 +58,7 @@ const tooltipFactory = (options = {}) => {
         tooltipHideOnClick: PropTypes.bool,
         tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key])),
         tooltipHideOnHover: PropTypes.bool,
-        tooltipHideDelay: PropTypes.number
+        tooltipHideDelay: PropTypes.number,
         tooltipShowOnClick: PropTypes.bool
       };
 
@@ -68,7 +68,7 @@ const tooltipFactory = (options = {}) => {
         tooltipHideOnClick: defaultHideOnClick,
         tooltipPosition: defaultPosition,
         tooltipHideOnHover: defaultHideOnHover,
-        tooltipHideDelay: defaultHideDelay
+        tooltipHideDelay: defaultHideDelay,
         tooltipShowOnClick: defaultShowOnClick
       };
 
