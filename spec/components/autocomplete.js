@@ -41,12 +41,28 @@ class AutocompleteTest extends React.Component {
 
         <Autocomplete
           allowCreate
+          keepFocusOnChange
           label="Pick multiple elements..."
-          onChange={this.handleMultipleChange}
+          onFocus={this.handleFocus}
+          onChange={this.handleMultipleArrayChange}
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
+          value={this.state.multipleArray}
+        />
+
+        <Autocomplete
+          allowCreate
+          label="Pick multiple elements with object value..."
+          onChange={this.handleMultipleObjectChange}
+          showSelectedWhenNotInSource
+          source={this.state.countriesObject}
+          suggestionMatch="anywhere"
+<<<<<<< HEAD
           value={this.state.multiple}
           template = {this.template}
+=======
+          value={this.state.multipleObject}
+>>>>>>> master
         />
 
         <Autocomplete

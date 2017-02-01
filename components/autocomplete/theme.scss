@@ -19,23 +19,12 @@
   }
 }
 
-.templateField{
-
-}
-.errored{
-
-}
-
-.disabled{
-
-}
 
 .label {
   font-size: $font-size-tiny;
   color: $color-text-secondary;
   transition: color $animation-duration $animation-curve-default;
 }
-
 .values {
   flex-direction: row;
   flex-wrap: wrap;

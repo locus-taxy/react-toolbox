@@ -36,12 +36,17 @@ export interface ProgressBarTheme {
   value?: string;
 }
 
-interface ProgressBarProps extends ReactToolbox.Props {
+export interface ProgressBarProps extends ReactToolbox.Props {
   /**
    * Value of a secondary progress bar useful for buffering.
    * @default 0
    */
   buffer?: number;
+  /**
+   * If true, component will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
   /**
    * Maximum value permitted.
    * @default 100

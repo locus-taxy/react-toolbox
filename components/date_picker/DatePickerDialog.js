@@ -7,7 +7,10 @@ const factory = (Dialog, Calendar) => {
     static propTypes = {
       active: PropTypes.bool,
       autoOk: PropTypes.bool,
+      cancelLabel: PropTypes.string,
       className: PropTypes.string,
+      disabledDates: PropTypes.array,
+      enabledDates: PropTypes.array,
       locale: React.PropTypes.oneOfType([
         React.PropTypes.string,
         React.PropTypes.object
@@ -15,6 +18,7 @@ const factory = (Dialog, Calendar) => {
       maxDate: PropTypes.object,
       minDate: PropTypes.object,
       name: PropTypes.string,
+      okLabel: PropTypes.string,
       onDismiss: PropTypes.func,
       onEscKeyDown: PropTypes.func,
       onOverlayClick: PropTypes.func,
@@ -35,7 +39,9 @@ const factory = (Dialog, Calendar) => {
 
     static defaultProps = {
       active: false,
+      cancelLabel: 'Cancel',
       className: '',
+      okLabel: 'Ok',
       value: new Date()
     };
 
@@ -82,8 +88,8 @@ const factory = (Dialog, Calendar) => {
     };
 
     actions = [
-      { label: 'Cancel', className: this.props.theme.button, onClick: this.props.onDismiss },
-      { label: 'Ok', className: this.props.theme.button, name: this.props.name, onClick: this.handleSelect }
+      { label: this.props.cancelLabel, className: this.props.theme.button, onClick: this.props.onDismiss },
+      { label: this.props.okLabel, className: this.props.theme.button, name: this.props.name, onClick: this.handleSelect }
     ];
 
     render () {
@@ -115,7 +121,9 @@ const factory = (Dialog, Calendar) => {
 
           <div className={theme.calendarWrapper}>
             <Calendar
+              disabledDates={this.props.disabledDates}
               display={this.state.display}
+              enabledDates={this.props.enabledDates}
               handleSelect={this.handleSelect}
               maxDate={this.props.maxDate}
               minDate={this.props.minDate}
@@ -123,7 +131,8 @@ const factory = (Dialog, Calendar) => {
               selectedDate={this.state.date}
               theme={this.props.theme}
               locale={this.props.locale}
-              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek} />
+              sundayFirstDayOfWeek={this.props.sundayFirstDayOfWeek}
+            />
           </div>
         </Dialog>
       );

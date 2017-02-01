@@ -19,10 +19,6 @@ export interface SnackbarTheme {
    */
   cancel?: string;
   /**
-   * Used for the icon element.
-   */
-  icon?: string;
-  /**
    * Used for the label element.
    */
   label?: string;
@@ -36,7 +32,7 @@ export interface SnackbarTheme {
   warning?: string;
 }
 
-interface SnackbarProps extends ReactToolbox.Props {
+export interface SnackbarProps extends ReactToolbox.Props {
   /**
    * Label for the action component inside the Snackbar.
    */
@@ -47,13 +43,17 @@ interface SnackbarProps extends ReactToolbox.Props {
    */
   active?: boolean;
   /**
-   * String key for an icon or Element which will be displayed in left side of the snackbar.
+   * Children to pass through the component.
    */
-  icon?: React.ReactNode | string;
+  children?: React.ReactNode;
   /**
-   * Text to display in the content. Required.
+   * Text to display in the content.
    */
-  label: string;
+  label?: string;
+  /**
+   * Callback function that will be called when the button action is clicked.
+   */
+  onClick?: Function;
   /**
    * Callback function when finish the set timeout.
    */

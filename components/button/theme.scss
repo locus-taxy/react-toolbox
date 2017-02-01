@@ -6,6 +6,19 @@
 
 .button {
   position: relative;
+
+  > input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 0.1px;
+    height: 0.1px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
 }
 
 %button {
@@ -163,6 +176,11 @@
       background: $button-neutral-color-hover;
     }
   }
+}
+
+.neutral.inverse[disabled] {
+  color: $button-disabled-text-color-inverse;
+  background-color: $button-disabled-background-inverse;
 }
 
 @include btn-colors("primary", $button-primary-color-contrast, $button-primary-color, $button-primary-color-hover);

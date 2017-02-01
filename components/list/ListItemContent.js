@@ -9,12 +9,17 @@ const types = ['auto', 'normal', 'large'];
 const factory = (ListItemText) => {
   class ListItemContent extends Component {
     static propTypes = {
-      caption: PropTypes.string,
+      caption: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node
+      ]),
       children: PropTypes.any,
       legend: PropTypes.string,
       theme: PropTypes.shape({
+        auto: PropTypes.string,
         itemContentRoot: PropTypes.string,
-        large: PropTypes.string
+        large: PropTypes.string,
+        normal: PropTypes.string
       }),
       type: PropTypes.oneOf(types)
     };
@@ -31,8 +36,9 @@ const factory = (ListItemText) => {
 
     render () {
       const {children, caption, legend, theme} = this.props;
+      const contentType = this.getType();
       const className = classnames(theme.itemContentRoot, {
-        [theme[this.getType()]]: theme[this.getType()]
+        [theme[contentType]]: theme[contentType]
       });
 
       return (
@@ -48,7 +54,7 @@ const factory = (ListItemText) => {
   return ListItemContent;
 };
 
-const ListItemContent = themr(LIST)(InjectListItemText);
-export default ListItemContent;
+const ListItemContent = factory(InjectListItemText);
+export default themr(LIST)(ListItemContent);
 export { factory as listItemContentFactory };
 export { ListItemContent };
