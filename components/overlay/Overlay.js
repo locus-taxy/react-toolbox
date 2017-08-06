@@ -1,75 +1,95 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { OVERLAY } from '../identifiers.js';
-import Portal from '../hoc/Portal.js';
+import { OVERLAY } from '../identifiers';
 
 class Overlay extends Component {
   static propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
-    invisible: PropTypes.bool,
+    lockScroll: PropTypes.bool,
     onClick: PropTypes.func,
     onEscKeyDown: PropTypes.func,
     theme: PropTypes.shape({
       active: PropTypes.string,
       backdrop: PropTypes.string,
-      invisible: PropTypes.string,
-      overlay: PropTypes.string
-    })
+      overlay: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
-    invisible: false
+    lockScroll: true,
   };
 
-  componentDidMount () {
-    if (this.props.active) {
-      this.escKeyListener = document.body.addEventListener('keydown', this.handleEscKey.bind(this));
-      document.body.style.overflow = 'hidden';
+  componentDidMount() {
+    const { active, lockScroll, onEscKeyDown } = this.props;
+    if (onEscKeyDown) document.body.addEventListener('keydown', this.handleEscKey);
+    if (active && lockScroll) document.body.style.overflow = 'hidden';
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.lockScroll) {
+      const becomingActive = nextProps.active && !this.props.active;
+      const becomingUnactive = !nextProps.active && this.props.active;
+
+      if (becomingActive) {
+        document.body.style.overflow = 'hidden';
+      }
+
+      if (becomingUnactive && !document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) {
+        document.body.style.overflow = '';
+      }
     }
   }
 
-  componentWillUpdate (nextProps) {
-    if (nextProps.active && !this.props.active) document.body.style.overflow = 'hidden';
-    if (!nextProps.active && this.props.active) document.body.style.overflow = null;
-  }
-
-  componentDidUpdate () {
-    if (this.props.active && !this.escKeyListener) {
-      this.escKeyListener = document.body.addEventListener('keydown', this.handleEscKey.bind(this));
+  componentDidUpdate(prevProps) {
+    if (this.props.onEscKeyDown) {
+      if (this.props.active && !prevProps.active) {
+        document.body.addEventListener('keydown', this.handleEscKey);
+      } else if (!this.props.active && prevProps.active) {
+        document.body.removeEventListener('keydown', this.handleEscKey);
+      }
     }
   }
 
-  componentWillUnmount () {
-    document.body.style.overflow = null;
-    if (this.escKeyListener) {
+  componentWillUnmount() {
+    if (this.props.active && this.props.lockScroll) {
+      if (!document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) {
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (this.props.onEscKeyDown) {
       document.body.removeEventListener('keydown', this.handleEscKey);
-      this.escKeyListener = null;
     }
   }
 
-  handleEscKey (e) {
+  handleEscKey = (e) => {
     if (this.props.active && this.props.onEscKeyDown && e.which === 27) {
       this.props.onEscKeyDown(e);
     }
   }
 
-  render () {
-    const { active, className, children, invisible, onClick, theme } = this.props;
-    const _className = classnames(theme.overlay, {
-      [theme.active]: active,
-      [theme.invisible]: invisible
-    }, className);
+  handleClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.props.onClick) {
+      this.props.onClick(event);
+    }
+  }
 
+  render() {
+    const { active, className, lockScroll, theme, onEscKeyDown, ...other } = this.props; // eslint-disable-line
     return (
-      <Portal>
-        <div className={_className}>
-          <div className={theme.backdrop} onClick={onClick} />
-          {children}
-        </div>
-      </Portal>
+      <div
+        {...other}
+        onClick={this.handleClick}
+        className={classnames(theme.overlay, {
+          [theme.active]: active,
+        }, className)}
+      />
     );
   }
 }

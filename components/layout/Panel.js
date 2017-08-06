@@ -1,33 +1,30 @@
-import React, { PropTypes } from 'react';
-import classnames from 'classnames';
+import React from 'react';
+import PropTypes from 'prop-types';
+import cn from 'classnames';
 import { themr } from 'react-css-themr';
-import { LAYOUT } from '../identifiers.js';
+import { LAYOUT } from '../identifiers';
 
-const Panel = ({ children, className, scrollY, theme }) => {
-  const _className = classnames(theme.panel, {
-    [theme.scrollY]: scrollY
-  }, className);
-
+const Panel = ({ bodyScroll, children, className, theme, ...other }) => {
+  const _className = cn(theme.panel, { [theme.bodyScroll]: bodyScroll }, className);
   return (
-    <div data-react-toolbox='panel' className={_className}>
+    <div {...other} data-react-toolbox="panel" className={_className}>
       {children}
     </div>
   );
 };
 
 Panel.propTypes = {
-  children: PropTypes.any,
+  bodyScroll: PropTypes.bool,
+  children: PropTypes.node,
   className: PropTypes.string,
-  scrollY: PropTypes.bool,
   theme: PropTypes.shape({
     panel: PropTypes.string,
-    scrollY: PropTypes.string
-  })
+  }),
 };
 
 Panel.defaultProps = {
+  bodyScroll: true,
   className: '',
-  scrollY: false
 };
 
 export default themr(LAYOUT)(Panel);

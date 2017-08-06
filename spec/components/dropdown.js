@@ -7,21 +7,22 @@ const countries = [
   { value: 'ES-es', label: 'Spain', img: 'http://' },
   { value: 'TH-th', label: 'Thailand', img: 'http://' },
   { value: 'EN-en', label: 'USA', img: 'http://' },
-  { value: 'FR-fr', label: 'France', img: 'http://' }
+  { value: 'FR-fr', label: 'France', img: 'http://' },
 ];
 
 class DropdownTest extends React.Component {
   state = {
-    dropdown4: 'TH-th'
+    dropdown4: 'TH-th',
   };
 
   handleChange = (dropdown, value) => {
+    console.log('selected', value);
     const newState = {};
     newState[dropdown] = value;
     this.setState(newState);
   };
 
-  customDropdownItem (data) {
+  customDropdownItem(data) {
     return (
       <div className={style.dropdownTemplate}>
         <img className={style.dropdownTemplateImage} src={data.img} />
@@ -33,7 +34,7 @@ class DropdownTest extends React.Component {
     );
   }
 
-  render () {
+  render() {
     return (
       <section>
         <h5>Dropdown</h5>
@@ -62,6 +63,15 @@ class DropdownTest extends React.Component {
           label="Country"
           onChange={this.handleChange.bind(this, 'dropdown3')}
           source={countries}
+        />
+
+        <Dropdown
+          label="Country"
+          ref="dropdown5"
+          onChange={this.handleChange.bind(this, 'dropdown5')}
+          source={countries}
+          value={this.state.dropdown5}
+          required
         />
       </section>
     );

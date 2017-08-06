@@ -1,17 +1,20 @@
 import React from 'react';
-import style from './style';
+import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
-import 'codemirror/mode/javascript/javascript';
+import style from './style.css';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript.js';
+import './one-dark.css';
 
 class Editor extends React.Component {
   static propTypes = {
-    className: React.PropTypes.string,
-    codeText: React.PropTypes.string,
-    lineNumbers: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
-    readOnly: React.PropTypes.bool,
-    tabSize: React.PropTypes.number,
-    theme: React.PropTypes.string
+    className: PropTypes.string,
+    codeText: PropTypes.string,
+    lineNumbers: PropTypes.bool,
+    onChange: PropTypes.func,
+    readOnly: PropTypes.bool,
+    tabSize: PropTypes.number,
+    theme: PropTypes.string
   };
 
   static defaultProps = {

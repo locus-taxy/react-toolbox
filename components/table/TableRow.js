@@ -1,87 +1,49 @@
-import React, { Component, PropTypes } from 'react';
+import React, { cloneElement, Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import utils from '../utils/utils';
+import { themr } from 'react-css-themr';
+import { TABLE } from '../identifiers';
+import InjectCheckbox from '../checkbox/Checkbox';
+import InjectTableCell from './TableCell';
 
-const factory = (Checkbox) => {
+const factory = (Checkbox, TableCell) => {
   class TableRow extends Component {
     static propTypes = {
-      data: PropTypes.object,
-      index: PropTypes.number,
-      model: PropTypes.object,
-      onChange: PropTypes.func,
+      children: PropTypes.node,
+      className: PropTypes.string,
+      idx: PropTypes.number,
       onSelect: PropTypes.func,
       selectable: PropTypes.bool,
       selected: PropTypes.bool,
       theme: PropTypes.shape({
-        editable: PropTypes.string,
+        checkboxCell: PropTypes.string,
         row: PropTypes.string,
-        selectable: PropTypes.string,
-        selected: PropTypes.string
-      })
+        selected: PropTypes.string,
+      }),
     };
 
-    handleInputChange = (index, key, type, event) => {
-      const value = type === 'checkbox' ? event.target.checked : event.target.value;
-      const onChange = this.props.model[key].onChange || this.props.onChange;
-      onChange(index, key, value);
+    handleSelect = (value) => {
+      const { idx, onSelect } = this.props;
+      if (onSelect) onSelect(idx, value);
     };
 
-    renderSelectCell () {
-      if (this.props.selectable) {
-        return (
-          <td className={this.props.theme.selectable}>
-            <Checkbox checked={this.props.selected} onChange={this.props.onSelect} />
-          </td>
-        );
-      }
-    }
-
-    renderCells () {
-      return Object.keys(this.props.model).map((key) => {
-        return <td key={key}>{this.renderCell(key)}</td>;
-      });
-    }
-
-    renderCell (key) {
-      const value = this.props.data[key];
-
-      // if the value is a valid React element return it directly, since it
-      // cannot be edited and should not be converted to a string...
-      if (React.isValidElement(value)) { return value; }
-
-      const onChange = this.props.model[key].onChange || this.props.onChange;
-      if (onChange) {
-        return this.renderInput(key, value);
-      } else if (value) {
-        return value.toString();
-      }
-    }
-
-    renderInput (key, value) {
-      const index = this.props.index;
-      const inputType = utils.inputTypeForPrototype(this.props.model[key].type);
-      const inputValue = utils.prepareValueForInput(value, inputType);
-      const checked = inputType === 'checkbox' && value ? true : null;
+    render() {
+      const { children, className, selectable, idx, selected, theme, ...other } = this.props; // eslint-disable-line
+      const _className = classnames(theme.row, {
+        [theme.selected]: selectable && selected,
+      }, className);
       return (
-        <input
-          checked={checked}
-          onChange={this.handleInputChange.bind(null, index, key, inputType)}
-          type={inputType}
-          value={inputValue}
-        />
-      );
-    }
-
-    render () {
-      const className = classnames(this.props.theme.row, {
-        [this.props.theme.editable]: this.props.onChange,
-        [this.props.theme.selected]: this.props.selected
-      });
-
-      return (
-        <tr data-react-toolbox-table='row' className={className}>
-          {this.renderSelectCell()}
-          {this.renderCells()}
+        <tr {...other} className={_className}>
+          {selectable && <TableCell className={theme.checkboxCell}>
+            <Checkbox checked={selected} onChange={this.handleSelect} />
+          </TableCell>}
+          {React.Children.map(children, (child, index) => {
+            if (!child) return null;
+            return cloneElement(child, {
+              column: index,
+              tagName: 'td',
+            });
+          })}
         </tr>
       );
     }
@@ -90,4 +52,7 @@ const factory = (Checkbox) => {
   return TableRow;
 };
 
-export default factory;
+const TableRow = factory(InjectCheckbox, InjectTableCell);
+export default themr(TABLE)(TableRow);
+export { factory as tableRowFactory };
+export { TableRow };

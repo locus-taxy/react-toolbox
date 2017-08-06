@@ -1,6 +1,6 @@
 # Input
 
-Although we are calling them Inputs they actually correspond to Material Design [Text fields](https://www.google.com/design/spec/components/text-fields.html). It allows a user to input text and it's the base for other components like the autocomplete.
+Although we are calling them Inputs they actually correspond to Material Design [Text fields](https://material.google.com/components/text-fields.html). It allows a user to input text and it's the base for other components like the autocomplete.
 
 <!-- example -->
 ```jsx
@@ -9,18 +9,18 @@ import Input from 'react-toolbox/lib/input';
 class InputTest extends React.Component {
   state = { name: '', phone: '', email: '', hint: '' };
 
-  handleChange = (name, value) => {
-    this.setState({...this.state, [name]: value});
+  handleChange = (value, ev) => {
+    this.setState({ [ev.target.name]: value });
   };
 
   render () {
     return (
       <section>
-        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16 } />
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange} maxLength={16 } />
         <Input type='text' label='Disabled field' disabled />
-        <Input type='email' label='Email address' icon='email' value={this.state.email} onChange={this.handleChange.bind(this, 'email')} />
-        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange.bind(this, 'phone')} />
-        <Input type='text' value={this.state.hint} label='Required Field' hint='With Hint' required onChange={this.handleChange.bind(this, 'hint')} icon={<span>J</span>} />
+        <Input type='email' label='Email address' name='email' icon='email' value={this.state.email} onChange={this.handleChange} />
+        <Input type='tel' label='Phone' name='phone' icon='phone' value={this.state.phone} onChange={this.handleChange} />
+        <Input type='text' label='Required Field' name='hint' hint='With Hint' required value={this.state.hint} onChange={this.handleChange} icon={<span>J</span>} />
       </section>
     );
   }
@@ -35,13 +35,14 @@ If you want to provide a theme via context, the component key is `RTInput`.
 |:-----|:-----|:-----|:-----|
 | `className`     | `String`                | `''`            | Sets a class name to give custom styles.|
 | `disabled`      | `Boolean`               | `false`         | If true, component will be disabled.|
-| `error`         | `String`                |                 | Give an error node to display under the field.|
+| `error`         | `String` or `Node`      |                 | Give an error node to display under the field.|
 | `floating`      | `Boolean`               | `true`          | Indicates if the label is floating in the input field or not.|
-| `hint`          | `String`                | `''`            | The text string to use for hint text element.|
+| `hint`          | `String` or `Node`      | `''`            | The text string to use for hint text element.|
 | `icon`          | `String` or `Element`   |                 | Name of an icon to use as a label for the input.|
-| `label`         | `String`                |                 | The text string to use for the floating label element.|
-| `maxLength`     | `Number`                |                 |Specifies the maximum number of characters allowed in the component.|
+| `label`         | `String` or `Node`      |                 | The text string to use for the floating label element.|
+| `maxLength`     | `Number`                |                 | Specifies the maximum number of characters allowed in the component.|
 | `multiline`     | `Boolean`               | `false`         | If true, a textarea element will be rendered. The textarea also grows and shrinks according to the number of lines.|
+| `rows`          | `Number`                |                 | The number of rows the multiline input field has.|
 | `onBlur`        | `Function`              |                 | Callback function that is fired when component is blurred.|
 | `onChange`      | `Function`              |                 | Callback function that is fired when the component's value changes.|
 | `onFocus`       | `Function`              |                 | Callback function that is fired when component is focused.|

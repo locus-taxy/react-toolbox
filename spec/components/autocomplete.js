@@ -5,35 +5,46 @@ class AutocompleteTest extends React.Component {
   state = {
     simple: 'Spain',
     simpleShowAll: 'England',
-    multiple: ['ES-es', 'TH-th'],
+    multipleArray: ['ES-es', 'TH-th'],
+    multipleObject: { 'ES-es': 'Spain', 'TH-th': 'Thailand' },
     countriesArray: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
-    countriesObject: {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England',
-      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'},
-    countriesObject2: {'ES-es': {'displayName':'palash', 'alias': 'pk'}, 'ES-ea': {'displayName':'padsafsdflash', 'alias': 'fg'}, 'ES-en': {'displayName':'e564334', 'alias': 'gfdga'}, 'ES-s': {'displayName':'4213421', 'alias': '45'}, }
-
+    countriesObject: {
+      'EN-gb': 'England',
+      'EN-en': 'United States of America',
+      'EN-nz': 'New Zealand',
+    },
   };
 
-  handleMultipleChange = (value) => {
+  handleFocus = (event) => {
+    console.log('This is focused');
+    console.log(event);
+  };
+
+  handleMultipleArrayChange = (value) => {
     this.setState({
-      multiple: value,
+      multipleArray: value,
       countriesObject: {
         ...this.state.countriesObject,
-        ...!this.state.countriesObject[value[0]] ? {[value[0]]: value[0]} : {}
-      }
+        ...(value[0] && !this.state.countriesObject[value[0]]) ? { [value[0]]: value[0] } : {},
+      },
+    });
+  };
+
+  handleMultipleObjectChange = (value) => {
+    this.setState({
+      multipleObject: value,
     });
   };
 
   handleSimpleChange = (value) => {
-    this.setState({simple: value});
+    this.setState({ simple: value });
   };
 
   handleSimpleShowAllChange = (value) => {
-    this.setState({simpleShowAll: value});
+    this.setState({ simpleShowAll: value });
   };
-  template(key, value){
-    return <div> { key + ', ' + value} </div>
-  }
-  render () {
+
+  render() {
     return (
       <section>
         <h5>Autocomplete</h5>
@@ -41,12 +52,23 @@ class AutocompleteTest extends React.Component {
 
         <Autocomplete
           allowCreate
+          keepFocusOnChange
           label="Pick multiple elements..."
-          onChange={this.handleMultipleChange}
+          onFocus={this.handleFocus}
+          onChange={this.handleMultipleArrayChange}
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
-          value={this.state.multiple}
-          template = {this.template}
+          value={this.state.multipleArray}
+        />
+
+        <Autocomplete
+          allowCreate
+          label="Pick multiple elements with object value..."
+          onChange={this.handleMultipleObjectChange}
+          showSelectedWhenNotInSource
+          source={this.state.countriesObject}
+          suggestionMatch="anywhere"
+          value={this.state.multipleObject}
         />
 
         <Autocomplete
@@ -63,14 +85,9 @@ class AutocompleteTest extends React.Component {
           label="Choose a country (showing all suggestions)"
           multiple={false}
           onChange={this.handleSimpleShowAllChange}
-          template = {this.template}
-          source={this.state.countriesObject2}
-          value={'pk'}
-          showSuggestionsWhenValueIsSet={true}
-          multiple={false}
-          valueDisplayField="displayName"
-
-          />
+          showSuggestionsWhenValueIsSet
+          source={this.state.countriesArray}
+          value={this.state.simpleShowAll}
         />
       </section>
     );

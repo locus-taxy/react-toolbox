@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { LIST } from '../identifiers.js';
+import { LIST } from '../identifiers';
 
 const ListSubHeader = ({ caption, className, theme }) => (
   <h5 className={classnames(theme.subheader, className)}>{caption}</h5>
@@ -10,11 +11,11 @@ const ListSubHeader = ({ caption, className, theme }) => (
 ListSubHeader.propTypes = {
   caption: PropTypes.string,
   className: PropTypes.string,
-  theme: PropTypes.object
+  theme: PropTypes.object, // eslint-disable-line
 };
 
 ListSubHeader.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default themr(LIST)(ListSubHeader);

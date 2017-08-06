@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
-import { RADIO } from '../identifiers.js';
-import InjectRadioButton from './RadioButton.js';
-import { isComponentOfType } from '../utils/react.js';
+import { RADIO } from '../identifiers';
+import InjectRadioButton from './RadioButton';
+import isComponentOfType from '../utils/is-component-of-type';
 
 const factory = (RadioButton) => {
   class RadioGroup extends Component {
@@ -10,35 +11,34 @@ const factory = (RadioButton) => {
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
-      name: PropTypes.string,
       onChange: PropTypes.func,
-      value: PropTypes.any
+      value: PropTypes.string,
     };
 
     static defaultProps = {
       className: '',
-      disabled: false
+      disabled: false,
     };
 
-    handleChange = (value) => {
-      if (this.props.onChange) this.props.onChange(value);
+    handleChange = (value, event) => {
+      if (this.props.onChange) this.props.onChange(value, event);
     };
 
-    renderRadioButtons () {
+    renderRadioButtons() {
       return React.Children.map(this.props.children, child => (
         !isComponentOfType(RadioButton, child)
           ? child
           : React.cloneElement(child, {
-              checked: child.props.value === this.props.value,
-              disabled: this.props.disabled || child.props.disabled,
-              onChange: this.handleChange.bind(this, child.props.value)
-            })
+            checked: child.props.value === this.props.value,
+            disabled: this.props.disabled || child.props.disabled,
+            onChange: this.handleChange.bind(this, child.props.value),
+          })
       ));
     }
 
-    render () {
+    render() {
       return (
-        <div data-react-toolbox='radio-group' className={this.props.className}>
+        <div data-react-toolbox="radio-group" className={this.props.className}>
           {this.renderRadioButtons()}
         </div>
       );

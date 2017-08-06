@@ -1,32 +1,34 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { TABS } from '../identifiers.js';
+import { TABS } from '../identifiers';
 
 class TabContent extends Component {
   static propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
-    tabIndex: PropTypes.number,
+    hidden: PropTypes.bool,
     theme: PropTypes.shape({
       active: PropTypes.string,
-      tab: PropTypes.string
-    })
+      tab: PropTypes.string,
+    }),
   };
 
   static defaultProps = {
     active: false,
-    className: ''
+    className: '',
+    hidden: true,
   };
 
-  render () {
+  render() {
     const className = classnames(this.props.theme.tab, {
-      [this.props.theme.active]: this.props.active
+      [this.props.theme.active]: this.props.active,
     }, this.props.className);
 
     return (
-      <section className={className} tabIndex={this.props.tabIndex}>
+      <section className={className} role="tabpanel" aria-expanded={this.props.hidden}>
         {this.props.children}
       </section>
     );

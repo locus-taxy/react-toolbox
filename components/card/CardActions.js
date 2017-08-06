@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
-import { CARD } from '../identifiers.js';
+import { CARD } from '../identifiers';
 
 const CardActions = ({ children, className, theme, ...other }) => (
   <div className={classnames(theme.cardActions, className)} {...other}>
@@ -10,11 +11,11 @@ const CardActions = ({ children, className, theme, ...other }) => (
 );
 
 CardActions.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
   className: PropTypes.string,
   theme: PropTypes.shape({
-    cardActions: PropTypes.string
-  })
+    cardActions: PropTypes.string,
+  }),
 };
 
 export default themr(CARD)(CardActions);

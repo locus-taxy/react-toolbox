@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { MENU } from '../identifiers.js';
-import InjectIconButton from '../button/IconButton.js';
-import InjectMenu from './Menu.js';
+import { MENU } from '../identifiers';
+import InjectIconButton from '../button/IconButton';
+import InjectMenu from './Menu';
 
 const factory = (IconButton, Menu) => {
   class IconMenu extends Component {
@@ -12,9 +13,10 @@ const factory = (IconButton, Menu) => {
       className: PropTypes.string,
       icon: PropTypes.oneOfType([
         PropTypes.string,
-        PropTypes.element
+        PropTypes.element,
       ]),
       iconRipple: PropTypes.bool,
+      inverse: PropTypes.bool,
       menuRipple: PropTypes.bool,
       onClick: PropTypes.func,
       onHide: PropTypes.func,
@@ -22,11 +24,11 @@ const factory = (IconButton, Menu) => {
       onShow: PropTypes.func,
       position: PropTypes.string,
       selectable: PropTypes.bool,
-      selected: PropTypes.any,
+      selected: PropTypes.node,
       theme: PropTypes.shape({
         icon: PropTypes.string,
-        iconMenu: PropTypes.string
-      })
+        iconMenu: PropTypes.string,
+      }),
     };
 
     static defaultProps = {
@@ -35,11 +37,11 @@ const factory = (IconButton, Menu) => {
       iconRipple: true,
       menuRipple: true,
       position: 'auto',
-      selectable: false
+      selectable: false,
     };
 
     state = {
-      active: false
+      active: false,
     }
 
     handleButtonClick = (event) => {
@@ -52,28 +54,32 @@ const factory = (IconButton, Menu) => {
       if (this.props.onHide) this.props.onHide();
     }
 
-    render () {
+    render() {
+      const {
+        children, className, icon, iconRipple, inverse, menuRipple, onHide, // eslint-disable-line
+        onSelect, onShow, position, selectable, selected, theme, ...other
+      } = this.props;
       return (
-        <div className={classnames(this.props.theme.iconMenu, this.props.className)}>
+        <div {...other} className={classnames(theme.iconMenu, className)}>
           <IconButton
-            className={this.props.theme.icon}
-            icon={this.props.icon}
+            className={theme.icon}
+            icon={icon}
+            inverse={inverse}
             onClick={this.handleButtonClick}
-            ripple={this.props.iconRipple}
+            ripple={iconRipple}
           />
           <Menu
-            ref='menu'
             active={this.state.active}
             onHide={this.handleMenuHide}
-            onSelect={this.props.onSelect}
-            onShow={this.props.onShow}
-            position={this.props.position}
-            ripple={this.props.menuRipple}
-            selectable={this.props.selectable}
-            selected={this.props.selected}
-            theme={this.props.theme}
+            onSelect={onSelect}
+            onShow={onShow}
+            position={position}
+            ripple={menuRipple}
+            selectable={selectable}
+            selected={selected}
+            theme={theme}
           >
-            {this.props.children}
+            {children}
           </Menu>
         </div>
       );

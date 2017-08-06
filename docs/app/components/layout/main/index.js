@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { Button } from 'react-toolbox';
 import Appbar from '../../../components/appbar';
@@ -7,28 +8,27 @@ import Playground from './components/playground.js';
 import MainNavigation from './components/navigation.js';
 import BaseDocs from './modules/components.md';
 import components from './modules/components.js';
-import buttonTheme from './button-theme.scss';
-import style from './style';
+import style from './style.css';
 
-const LoadExampleButton = (props) => (
+const LoadExampleButton = props => (
   <Button
     accent
-    icon='code'
+    icon="code"
     label="Load in playground"
-    theme={buttonTheme}
+    theme={style}
     onClick={props.onClick}
     raised
   />
 );
 
 LoadExampleButton.propTypes = {
-  onClick: React.PropTypes.func
+  onClick: PropTypes.func
 };
 
 class Main extends React.Component {
   static propTypes = {
-    onClick: React.PropTypes.func,
-    params: React.PropTypes.object
+    onClick: PropTypes.func,
+    params: PropTypes.object
   };
 
   state = {
@@ -46,12 +46,12 @@ class Main extends React.Component {
   LOAD_EXAMPLE_CLASS = 'js-load-in-playground playground-button';
 
   handlePlayGroundClick = () => {
-    this.setState({ playground: !this.state.playground});
+    this.setState({ playground: !this.state.playground });
   };
 
   handlePlaygroundLoad = (code) => {
     this.refs.playground.loadCode(code);
-    this.setState({playground: true});
+    this.setState({ playground: true });
   };
 
   renderExampleLoaders () {
@@ -82,7 +82,7 @@ class Main extends React.Component {
 
     return (
       <div className={className}>
-        <Appbar className={style.appbar}/>
+        <Appbar className={style.appbar} />
         <Button
           accent
           floating
@@ -91,8 +91,8 @@ class Main extends React.Component {
           onClick={this.handlePlayGroundClick}
         />
         <MainNavigation className={style.navigation} />
-        <Markdown className={style.documentation} markdown={docs}/>
-        <Playground ref='playground' className={style.playground} />
+        <Markdown className={style.documentation} markdown={docs} />
+        <Playground ref="playground" className={style.playground} />
       </div>
     );
   }
