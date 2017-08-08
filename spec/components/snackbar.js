@@ -28,13 +28,13 @@ class SnackbarTest extends React.Component {
         <Snackbar
           action='Hide'
           active={this.state.active}
-          icon='question_answer'
-          label='Snackbar action cancel'
           timeout={2000}
           onClick={this.handleSnackbarClick}
           onTimeout={this.handleSnackbarTimeout}
           type='warning'
-        />
+        >
+          Snackbar action <strong>cancel</strong>
+        </Snackbar>
       </section>
     );
   }

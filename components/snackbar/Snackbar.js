@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { SNACKBAR } from '../identifiers.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
-import FontIcon from '../font_icon/FontIcon.js';
 import InjectOverlay from '../overlay/Overlay.js';
 import InjectButton from '../button/Button.js';
 
@@ -12,12 +11,12 @@ const factory = (Overlay, Button) => {
     static propTypes = {
       action: PropTypes.string,
       active: PropTypes.bool,
+      children: PropTypes.node,
       className: PropTypes.string,
-      icon: PropTypes.oneOfType([
+      label: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.element
       ]),
-      label: PropTypes.string,
       onClick: PropTypes.func,
       onTimeout: PropTypes.func,
       theme: PropTypes.shape({
@@ -25,7 +24,6 @@ const factory = (Overlay, Button) => {
         active: PropTypes.string,
         button: PropTypes.string,
         cancel: PropTypes.string,
-        icon: PropTypes.string,
         label: PropTypes.string,
         snackbar: PropTypes.string,
         warning: PropTypes.string
@@ -34,23 +32,15 @@ const factory = (Overlay, Button) => {
       type: PropTypes.oneOf([ 'accept', 'cancel', 'warning' ])
     };
 
-    constructor(props){
-      super(props);
-      if (props.active && props.timeout) {
-        if (this.curTimeout) clearTimeout(this.curTimeout);
-        this.curTimeout = setTimeout(() => {
-          props.onTimeout();
-          this.curTimeout = null;
-        }, props.timeout);
+    componentDidMount () {
+      if (this.props.active && this.props.timeout) {
+        this.scheduleTimeout(this.props);
       }
     }
+
     componentWillReceiveProps (nextProps) {
       if (nextProps.active && nextProps.timeout) {
-        if (this.curTimeout) clearTimeout(this.curTimeout);
-        this.curTimeout = setTimeout(() => {
-          nextProps.onTimeout();
-          this.curTimeout = null;
-        }, nextProps.timeout);
+        this.scheduleTimeout(nextProps);
       }
     }
 
@@ -58,8 +48,17 @@ const factory = (Overlay, Button) => {
       clearTimeout(this.curTimeout);
     }
 
+    scheduleTimeout = props => {
+      const { onTimeout, timeout } = props;
+      if (this.curTimeout) clearTimeout(this.curTimeout);
+      this.curTimeout = setTimeout(() => {
+        if (onTimeout) onTimeout();
+        this.curTimeout = null;
+      }, timeout);
+    }
+
     render () {
-      const {action, active, icon, label, onClick, theme, type } = this.props;
+      const {action, active, children, label, onClick, theme, type } = this.props;
       const className = classnames([theme.snackbar, theme[type]], {
         [theme.active]: active
       }, this.props.className);
@@ -67,8 +66,10 @@ const factory = (Overlay, Button) => {
       return (
         <Overlay invisible>
           <div data-react-toolbox='snackbar' className={className}>
-            {icon ? <FontIcon value={icon} className={theme.icon} /> : null}
-            <span className={theme.label}>{label}</span>
+            <span className={theme.label}>
+              {label}
+              {children}
+            </span>
             {action ? <Button className={theme.button} label={action} onClick={onClick}/> : null}
           </div>
         </Overlay>
