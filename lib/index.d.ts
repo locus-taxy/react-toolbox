@@ -1,4 +1,5 @@
-export declare namespace __ReactToolbox {
+import * as React from "react";
+export declare namespace ReactToolbox {
   interface Props {
     /**
      * Set a class for the root component.
@@ -43,13 +44,13 @@ export declare namespace __ReactToolbox {
     onMouseOver?: Function;
     onTouchCancel?: Function;
     onTouchEnd?: Function;
-    uchMove?: Function;
+    onTouchMove?: Function;
     onTouchStart?: Function;
     /**
      * Set inline style for the root component.
      */
-    style?: __React.CSSProperties;
+    style?: React.CSSProperties;
   }
 }
 
-export default __ReactToolbox;
+export default ReactToolbox;

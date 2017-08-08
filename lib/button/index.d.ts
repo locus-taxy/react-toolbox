@@ -52,7 +52,7 @@ export interface ButtonTheme {
   toggle?: string;
 }
 
-interface ButtonProps extends ReactToolbox.Props {
+interface ButtonBaseProps extends ReactToolbox.Props {
   /**
    * Indicates if the button should have accent color.
    * @default false
@@ -68,6 +68,45 @@ interface ButtonProps extends ReactToolbox.Props {
    */
   disabled?: boolean;
   /**
+   * Value of the icon (See Font Icon Component).
+   */
+  icon?: React.ReactNode | string;
+  /**
+   * If true, the neutral colors are inverted. Useful to put a button over a dark background.
+   */
+  inverse?: boolean;
+  /**
+   * Set it to false if you don't want the neutral styles to be included.
+   * @default true
+   */
+  neutral?: boolean;
+  /**
+   * Fires after the mouse leaves the Component.
+   */
+  onMouseLeave?: Function;
+  /**
+   * Fires after the mouse is released from the Component.
+   */
+  onMouseUp?: Function;
+  /**
+   * Indicates if the button should have primary color.
+   * @default false
+   */
+  primary?: boolean;
+  /**
+   * If true, component will have a ripple effect on click.
+   * @default true
+   */
+  ripple?: boolean;
+  /**
+   * Component root container type.
+   * @default button
+   */
+  type?: string;
+}
+
+export interface ButtonProps extends ButtonBaseProps {
+  /**
    * If true, the button will have a flat look.
    * @default false
    */
@@ -82,14 +121,6 @@ interface ButtonProps extends ReactToolbox.Props {
    */
   href?: string;
   /**
-   * Value of the icon (See Font Icon Component).
-   */
-  icon?: React.ReactNode | string;
-  /**
-   * If true, the neutral colors are inverted. Useful to put a button over a dark background.
-   */
-  inverse?: boolean;
-  /**
    * The text string to use for the name of the button.
    */
   label?: string;
@@ -99,25 +130,10 @@ interface ButtonProps extends ReactToolbox.Props {
    */
   mini?: boolean;
   /**
-   * Set it to false if you don't want the neutral styles to be included.
-   * @default true
-   */
-  neutral?: boolean;
-  /**
-   * Indicates if the button should have primary color.
-   * @default false
-   */
-  primary?: boolean;
-  /**
    * If true, the button will have a raised look.
    * @default false
    */
   raised?: boolean;
-  /**
-   * If true, component will have a ripple effect on click.
-   * @default true
-   */
-  ripple?: boolean;
   /**
    * Classnames object defining the component style.
    */
@@ -161,48 +177,11 @@ export interface IconButtonTheme {
   toggle?: string;
 }
 
-interface IconButtonProps extends ReactToolbox.Props {
-  /**
-   * Indicates if the button should have accent color.
-   * @default false
-   */
-  accent?: boolean;
-  /**
-   * Children to pass through the component.
-   */
-  children?: React.ReactNode;
-  /**
-   * If true, component will be disabled.
-   * @default false
-   */
-  disabled?: boolean;
+export interface IconButtonProps extends ButtonBaseProps {
   /**
    * Creates a link for the button.
    */
   href?: string;
-  /**
-   * Value of the icon (See Font Icon Component).
-   */
-  icon?: React.ReactNode | string;
-  /**
-   * If true, the neutral colors are inverted. Useful to put a button over a dark background.
-   */
-  inverse?: boolean;
-  /**
-   * Set it to false if you don't want the neutral styles to be included.
-   * @default true
-   */
-  neutral?: boolean;
-  /**
-   * Indicates if the button should have primary color.
-   * @default false
-   */
-  primary?: boolean;
-  /**
-   * If true, component will have a ripple effect on click.
-   * @default true
-   */
-  ripple?: boolean;
   /**
    * Classnames object defining the component style.
    */
@@ -210,3 +189,42 @@ interface IconButtonProps extends ReactToolbox.Props {
 }
 
 export class IconButton extends React.Component<IconButtonProps, {}> { }
+
+export interface BrowseButtonTheme extends ButtonTheme { }
+
+export interface BrowseButtonProps extends ButtonBaseProps {
+  /**
+   * If true, the button will have a flat look.
+   * @default false
+   */
+  flat?: boolean;
+  /**
+   * If true, the button will have a floating look.
+   * @default false
+   */
+  floating?: boolean;
+  /**
+   * Creates a link for the button.
+   */
+  href?: string;
+  /**
+   * The text string to use for the name of the button.
+   */
+  label?: string;
+  /**
+   * To be used with floating button. If true, the button will be smaller.
+   * @default false
+   */
+  mini?: boolean;
+  /**
+   * If true, the button will have a raised look.
+   * @default false
+   */
+  raised?: boolean;
+  /**
+   * Classnames object defining the component style.
+   */
+  theme?: BrowseButtonTheme;
+}
+
+export class BrowseButton extends React.Component<BrowseButtonProps, {}> { }

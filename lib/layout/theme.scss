@@ -29,7 +29,7 @@
       top: 0;
       bottom: 0;
       left: 0;
-      z-index: $z-index-highest;
+      z-index: $z-index-higher;
       width: 0;
       height: 100%;
       background-color: rgba($drawer-overlay-color, 0);
@@ -38,6 +38,8 @@
 
     .drawerContent {
       @include shadow-2dp();
+      position: absolute;
+      z-index: $z-index-highest;
       display: flex;
       width: $navigation-drawer-mobile-width;
       max-width: $navigation-drawer-max-mobile-width;
@@ -108,6 +110,12 @@
       }
     }
 
+    @media screen and (min-width: $layout-breakpoint-sm-tablet) {
+      &.smTabletPermanent {
+        @include permanent();
+      }
+    }
+
     @media screen and (min-width: $layout-breakpoint-md) {
       &.mdPermanent {
         @include permanent();
@@ -116,6 +124,12 @@
 
     @media screen and (min-width: $layout-breakpoint-lg) {
       &.lgPermanent {
+        @include permanent();
+      }
+    }
+
+    @media screen and (min-width: $layout-breakpoint-lg-tablet) {
+      &.lgTabletPermanent {
         @include permanent();
       }
     }

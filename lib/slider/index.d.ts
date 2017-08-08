@@ -56,12 +56,17 @@ export interface SliderTheme {
   snaps?: string;
 }
 
-interface SliderProps extends ReactToolbox.Props {
+export interface SliderProps extends ReactToolbox.Props {
   /**
    * If true, an input is shown and the user can set the slider from keyboard value.
    * @default false
    */
   editable?: boolean;
+  /**
+   * If true, component will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
   /**
    * Maximum value permitted.
    * @default 100
