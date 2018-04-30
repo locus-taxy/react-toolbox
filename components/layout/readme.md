@@ -1,6 +1,6 @@
 # Layout
 
-A Layout is a container that can hold a main content area with an optional navigation drawer (on the left) and/or sidebar (on the right). According to the [material design spec](https://www.google.com/design/spec/layout/structure.html#structure-side-nav), the left drawer is typically used for navigation or identity-based content, while the right sidebar is secondary content related to the main content.
+A Layout is a container that can hold a main content area with an optional navigation drawer (on the left) and/or sidebar (on the right). According to the [material design spec](https://material.google.com/layout/structure.html#structure-side-nav), the left drawer is typically used for navigation or identity-based content, while the right sidebar is secondary content related to the main content.
 
 <!-- example -->
 ```jsx
@@ -37,7 +37,7 @@ class LayoutTest extends React.Component {
                     </p>
                 </NavDrawer>
                 <Panel>
-                    <AppBar><IconButton icon='menu' inverse={ true } onClick={ this.toggleDrawerActive }/></AppBar>
+                    <AppBar leftIcon='menu' onLeftIconClick={ this.toggleDrawerActive } />
                     <div style={{ flex: 1, overflowY: 'auto', padding: '1.8rem' }}>
                         <h1>Main Content</h1>
                         <p>Main content goes here.</p>
@@ -65,22 +65,22 @@ The primary layout component. This acts as the main container that all subcompon
 
 ### Breakpoints and Increments
 
-The Layout's subcomponents can alter their appearance and behavior based on the current screen size. The layout uses the screen breakpoints described in the [material design spec](https://www.google.com/design/spec/layout/responsive-ui.html#responsive-ui-breakpoints), namely:
+The Layout's subcomponents can alter their appearance and behavior based on the current screen size. The layout uses the screen breakpoints described in the [material design spec](https://material.google.com/layout/responsive-ui.html#responsive-ui-breakpoints), namely:
 
 | Width | Abreviation | Typical Device |
 |:-----|:-----|:-----|
 | 480px | `xxs` | Phone (portrait) |
 | 600px | `xs` | Small tablet, phone (landscape) |
-| 720px | `sm-tablet` | Small tablet (portrait) |
+| 720px | `smTablet` | Small tablet (portrait) |
 | 840px | `sm` | Large tablet (portrait) |
 | 960px | `md` | Small tablet (landscape) |
-| 1024px | `lg-tablet` | Large tablet (landscape) |
+| 1024px | `lgTablet` | Large tablet (landscape) |
 | 1280px | `lg` | Large tablet (landscape), desktop |
 | 1440px | `xl` | desktop |
 | 1600px | `xxl` | desktop |
 | 1920px | `xxxl` | desktop |
 
-The components also make use of [standard increments](https://www.google.com/design/spec/layout/metrics-keylines.html#metrics-keylines-sizing-by-increments), which is a unit equal to the height of the action bar. At mobile sizes (< `xs`) the increment is 56px. On larger screens, it is 64px.
+The components also make use of [standard increments](https://material.google.com/layout/metrics-keylines.html#metrics-keylines-sizing-by-increments), which is a unit equal to the height of the action bar. At mobile sizes (< `xs`) the increment is 56px. On larger screens, it is 64px.
 
 ### Content Area Layout
 
@@ -103,7 +103,7 @@ The themed key the `Layout` in general is `ToolboxLayout`. For the `Layout` wrap
 
 ## NavDrawer
 
-The [navigation drawer](https://www.google.com/design/spec/patterns/navigation-drawer.html) slides in from the left and usually holds [the application's main navigation](https://www.google.com/design/spec/layout/structure.html#structure-side-nav). The drawer's width is based on the screen size:
+The [navigation drawer](https://material.google.com/patterns/navigation-drawer.html) slides in from the left and usually holds [the application's main navigation](https://material.google.com/layout/structure.html#structure-side-nav). The drawer's width is based on the screen size:
 
 | Breakpoint | Drawer Width | Notes |
 |:-----|:-----|:-----|
@@ -148,6 +148,7 @@ The `Panel` is the main content area within a `Layout`.  It is a full-height fle
 ### Properties
 | Name | Type | Default | Description |
 |:-----|:-----|:-----|:-----|
+| `onScroll` | `Function` | | Callback function to be invoked when the component scrolls. |
 | `scrollY` | `bool` | `false` | If true, the panel will vertically scroll all content. |
 | `className` | `string` |  | Additional class(es) for custom styling. |
 
@@ -159,7 +160,7 @@ The `Panel` is the main content area within a `Layout`.  It is a full-height fle
 
 ## Sidebar
 
-The `Sidebar` is an extra drawer that docks to the right side of the `Layout`. The sidebar's width can be set either to a multiple of the "standard increment" (1 - 12 increments) or as a percentage of the parent `Layout` width (25%, 33%, 50%, 66%, 75%, 100%). Regardless of the width set, at mobile screen sizes the sidebar acts like a full-screen dialog that covers the entire screen (see [examples](https://www.google.com/design/spec/layout/structure.html#structure-side-nav)).
+The `Sidebar` is an extra drawer that docks to the right side of the `Layout`. The sidebar's width can be set either to a multiple of the "standard increment" (1 - 12 increments) or as a percentage of the parent `Layout` width (25%, 33%, 50%, 66%, 75%, 100%). Regardless of the width set, at mobile screen sizes the sidebar acts like a full-screen dialog that covers the entire screen (see [examples](https://material.google.com/layout/structure.html#structure-side-nav)).
 
 ### Properties
 | Name | Type | Default | Description |

@@ -5,21 +5,40 @@ class AutocompleteTest extends React.Component {
   state = {
     simple: 'Spain',
     simpleShowAll: 'England',
-    multiple: ['ES-es', 'TH-th'],
+    multipleArray: ['ES-es', 'TH-th'],
+    multipleObject: {'ES-es': 'Spain', 'TH-th': 'Thailand'},
     countriesArray: ['Spain', 'England', 'USA', 'Thailand', 'Tongo', 'Slovenia'],
+<<<<<<< HEAD
     countriesObject: {'ES-es': 'Spain', 'TH-th': 'Thailand', 'EN-gb': 'England',
       'EN-en': 'United States of America', 'EN-nz': 'New Zealand'},
     countriesObject2: {'ES-es': {'displayName':'palash', 'alias': 'pk'}, 'ES-ea': {'displayName':'padsafsdflash', 'alias': 'fg'}, 'ES-en': {'displayName':'e564334', 'alias': 'gfdga'}, 'ES-s': {'displayName':'4213421', 'alias': '45'}, }
 
+=======
+    countriesObject: {
+      'EN-gb': 'England',
+      'EN-en': 'United States of America', 'EN-nz': 'New Zealand'
+    }
+>>>>>>> e835934a26a1dd4a9a5c94792cc5ad98572c2833
   };
 
-  handleMultipleChange = (value) => {
+  handleFocus = (event) => {
+    console.log('This is focused');
+    console.log(event);
+  };
+
+  handleMultipleArrayChange = (value) => {
     this.setState({
-      multiple: value,
+      multipleArray: value,
       countriesObject: {
         ...this.state.countriesObject,
-        ...!this.state.countriesObject[value[0]] ? {[value[0]]: value[0]} : {}
+        ...(value[0] && !this.state.countriesObject[value[0]]) ? {[value[0]]: value[0]} : {}
       }
+    });
+  };
+
+  handleMultipleObjectChange = (value) => {
+    this.setState({
+      multipleObject: value
     });
   };
 
@@ -41,12 +60,28 @@ class AutocompleteTest extends React.Component {
 
         <Autocomplete
           allowCreate
+          keepFocusOnChange
           label="Pick multiple elements..."
-          onChange={this.handleMultipleChange}
+          onFocus={this.handleFocus}
+          onChange={this.handleMultipleArrayChange}
           source={this.state.countriesObject}
           suggestionMatch="anywhere"
+          value={this.state.multipleArray}
+        />
+
+        <Autocomplete
+          allowCreate
+          label="Pick multiple elements with object value..."
+          onChange={this.handleMultipleObjectChange}
+          showSelectedWhenNotInSource
+          source={this.state.countriesObject}
+          suggestionMatch="anywhere"
+<<<<<<< HEAD
           value={this.state.multiple}
           template = {this.template}
+=======
+          value={this.state.multipleObject}
+>>>>>>> e835934a26a1dd4a9a5c94792cc5ad98572c2833
         />
 
         <Autocomplete

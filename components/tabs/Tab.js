@@ -19,7 +19,9 @@ class Tab extends Component {
       active: PropTypes.string,
       disabled: PropTypes.string,
       hidden: PropTypes.string,
-      label: PropTypes.string
+      label: PropTypes.string,
+      withIcon: PropTypes.string,
+      withText: PropTypes.string
     })
   };
 
@@ -57,10 +59,10 @@ class Tab extends Component {
     }, className);
 
     return (
-      <label {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
+      <button type="button" {...other} data-react-toolbox='tab' className={_className} onClick={this.handleClick}>
         {icon && <FontIcon className={theme.icon} value={icon}/>}
         {label}
-      </label>
+      </button>
     );
   }
 }

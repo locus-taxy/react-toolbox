@@ -19,6 +19,7 @@ const defaults = {
   className: '',
   delay: 0,
   hideOnClick: true,
+  showOnClick: false,
   position: POSITION.VERTICAL,
   theme: {},
   hideOnHover: true,
@@ -31,6 +32,7 @@ const tooltipFactory = (options = {}) => {
     className: defaultClassName,
     delay: defaultDelay,
     hideOnClick: defaultHideOnClick,
+    showOnClick: defaultShowOnClick,
     position: defaultPosition,
     theme: defaultTheme,
     hideOnHover: defaultHideOnHover,
@@ -51,21 +53,26 @@ const tooltipFactory = (options = {}) => {
           tooltipActive: PropTypes.string,
           tooltipWrapper: PropTypes.string
         }),
-        tooltip: PropTypes.any,
+        tooltip: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.node
+        ]),
         tooltipDelay: PropTypes.number,
+        tooltipHideDelay: PropTypes.number,
         tooltipHideOnClick: PropTypes.bool,
-        tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key])),
         tooltipHideOnHover: PropTypes.bool,
-        tooltipHideDelay: PropTypes.number
+        tooltipPosition: PropTypes.oneOf(Object.keys(POSITION).map(key => POSITION[key]))
       };
 
       static defaultProps = {
         className: defaultClassName,
+        tooltipClassName: defaultTooltipClassName,
         tooltipDelay: defaultDelay,
         tooltipHideOnClick: defaultHideOnClick,
         tooltipPosition: defaultPosition,
         tooltipHideOnHover: defaultHideOnHover,
-        tooltipHideDelay: defaultHideDelay
+        tooltipHideDelay: defaultHideDelay,
+        tooltipShowOnClick: defaultShowOnClick
       };
 
       state = {
@@ -156,7 +163,7 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseEnter = (event) => {
-        this.activate(this.calculatePosition(event.target));
+        this.activate(this.calculatePosition(event.currentTarget));
         if (this.props.onMouseEnter) this.props.onMouseEnter(event);
       };
 
@@ -192,7 +199,14 @@ const tooltipFactory = (options = {}) => {
       }
 
       handleClick = (event) => {
-        if (this.props.tooltipHideOnClick) this.deactivate();
+        if (this.props.tooltipHideOnClick && this.state.active) {
+            this.deactivate();
+        }
+
+        if (this.props.tooltipShowOnClick && !this.state.active) {
+          this.activate(this.calculatePosition(event.currentTarget));
+        }
+
         if (this.props.onClick) this.props.onClick(event);
       };
 
@@ -208,6 +222,7 @@ const tooltipFactory = (options = {}) => {
           tooltipHideOnClick, //eslint-disable-line no-unused-vars
           tooltipPosition,    //eslint-disable-line no-unused-vars
           tooltipHideOnHover, //eslint-disable-line no-unused-vars
+          tooltipShowOnClick, //eslint-disable-line no-unused-vars
           tooltipClassName,
           ...other
         } = this.props;
@@ -217,6 +232,8 @@ const tooltipFactory = (options = {}) => {
           [theme[positionClass]]: theme[positionClass]
         });
 
+        const isNative = typeof ComposedComponent === 'string';
+
         return (
           <ComposedComponent
             {...other}
@@ -224,7 +241,7 @@ const tooltipFactory = (options = {}) => {
             onClick={this.handleClick}
             onMouseEnter={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
-            theme={theme}
+            {...isNative ? {} : {theme}}
           >
             {children ? children : null}
             {visible && (

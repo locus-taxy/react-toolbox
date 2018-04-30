@@ -1,6 +1,6 @@
 # Progress Bar
 
-Minimize visual changes that occur while your app loads content by representing each operation with a single [activity indicator](https://www.google.com/design/spec/components/progress-activity.html). For example, a refresh operation should display either a refresh bar or an activity circle, but not both.
+Minimize visual changes that occur while your app loads content by representing each operation with a single [activity indicator](https://material.google.com/components/progress-activity.html). For example, a refresh operation should display either a refresh bar or an activity circle, but not both.
 
 <!-- example -->
 ```jsx
@@ -22,6 +22,7 @@ If you want to provide a theme via context, the component key is `RTProgressBar`
 |:-----|:-----|:-----|:-----|
 | `buffer`      | `Number`    | `0`             | Value of a secondary progress bar useful for buffering.|
 | `className`   | `String`    | `''`            | Additional class name to provide custom styling.|
+| `disabled`    | `Boolean`   | `false`         | If true, component will be disabled.|
 | `max`         | `Number`    | `100`           | Maximum value permitted.|
 | `min`         | `Number`    | `0`             | Minimum value permitted.|
 | `mode`        | `String`    | `indeterminate` | Mode of the progress bar, it can be `determinate` or `indeterminate`.|
