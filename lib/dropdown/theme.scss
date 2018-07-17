@@ -12,6 +12,11 @@
       visibility: hidden;
     }
   }
+
+  &:focus {
+    outline: none;
+  }
+
   &.active {
     > .label, > .value {
       opacity: .5;
