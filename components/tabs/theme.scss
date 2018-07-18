@@ -76,6 +76,11 @@
       margin-bottom: $tab-icon-margin-bottom;
     }
   }
+
+  &:focus {
+    outline: none;
+  }
+
 }
 
 .icon {
