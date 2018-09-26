@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { MENU } from '../identifiers.js';
 import { events, utils } from '../utils';
 import InjectMenuItem from './MenuItem.js';

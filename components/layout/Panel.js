@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { LAYOUT } from '../identifiers.js';
 
 const Panel = ({ children, className, onScroll, scrollY, theme }) => {

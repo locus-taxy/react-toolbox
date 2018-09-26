@@ -40,7 +40,8 @@
     "core-js": "^2.4.0",
     "immutability-helper": "^2.0.0",
     "normalize.css": "^4.2.0",
-    "react-css-themr": "^1.7.1"
+    "prop-types": "^15.6.2",
+    "react-css-themr": "2.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.4",
@@ -79,7 +80,6 @@
     "lint-staged": "^3.2.3",
     "mocha": "^3.2.0",
     "node-sass": "^3.13.0",
-    "normalize.css": "~4.2.0",
     "phantomjs-prebuilt": "^2.1.14",
     "postcss-loader": "^1.2.1",
     "pre-commit": "^1.2.2",
@@ -121,7 +121,7 @@
   "peerDependencies": {
     "classnames": "~2.2.0",
     "immutability-helper": "~2.0.0",
-    "normalize.css": "~4.2.0", 
+    "normalize.css": "^4.2.0",
     "react": "^0.14 || ^15.4.0",
     "react-addons-css-transition-group": "^0.14.0 || ^15.4.0",
     "react-dom": "^0.14.0 || ^15.4.0"

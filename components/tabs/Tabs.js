@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { TABS } from '../identifiers.js';
 import InjectFontIcon from '../font_icon/FontIcon.js';
 import InjectTab from './Tab.js';

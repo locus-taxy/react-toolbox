@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { DRAWER } from '../identifiers.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
 import InjectOverlay from '../overlay/Overlay.js';

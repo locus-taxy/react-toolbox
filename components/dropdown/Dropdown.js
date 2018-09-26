@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import { DROPDOWN } from '../identifiers.js';
 import InjectInput from '../input/Input.js';

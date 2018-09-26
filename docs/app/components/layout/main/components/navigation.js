@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { List, ListItem } from 'react-toolbox';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import Carbon from '../../../Carbon';
 import components from '../modules/components';
 import style from './navigation.scss';
