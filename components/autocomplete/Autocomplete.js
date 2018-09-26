@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import { AUTOCOMPLETE } from '../identifiers.js';
 import InjectChip from '../chip/Chip.js';
@@ -20,14 +21,14 @@ const factory = (Chip, Input) => {
      className: PropTypes.string,
      direction: PropTypes.oneOf(['auto', 'up', 'down']),
      disabled: PropTypes.bool,
-     error: React.PropTypes.oneOfType([
-       React.PropTypes.string,
-       React.PropTypes.node
+     error: PropTypes.oneOfType([
+       PropTypes.string,
+       PropTypes.node
      ]),
      keepFocusOnChange: PropTypes.bool,
-     label: React.PropTypes.oneOfType([
-       React.PropTypes.string,
-       React.PropTypes.node
+     label: PropTypes.oneOfType([
+       PropTypes.string,
+       PropTypes.node
      ]),
      multiple: PropTypes.bool,
      onBlur: PropTypes.func,
@@ -135,7 +136,7 @@ const factory = (Chip, Input) => {
        && this.state.showAllSuggestions
      );
      if (shouldClearQuery) {
-       this.setState({query: '', active:''});
+       this.setState({query: '', active: ''});
        this.unselect(this.props.value, event);
      }
 
@@ -180,7 +181,7 @@ const factory = (Chip, Input) => {
       if (!this.props.multiple && key) {
         const source_value = this.source().get(`${key}`);
         query_value = source_value ? source_value : key;
-        if(typeof query_value === 'object' && this.props.valueDisplayField){
+        if (typeof query_value === 'object' && this.props.valueDisplayField){
           query_value = query_value[this.props.valueDisplayField];
         }
       }
@@ -216,15 +217,13 @@ const factory = (Chip, Input) => {
      // When multiple is false, suggest any value which matches the query if showAllSuggestions is false
      } else if (query && !this.state.showAllSuggestions) {
        for (const [key, value] of source) {
-          if(this.props.customMatcher){
-              if(this.props.customMatcher(key, value, query)){
+          if (this.props.customMatcher){
+              if (this.props.customMatcher(key, value, query)){
                 suggest.set(key, value);
               }
-          } else {
-         if (this.matches(value.toLowerCase().trim(), query)) {
+          } else if (this.matches(value.toLowerCase().trim(), query)) {
            suggest.set(key, value);
          }
-       }
        }
 
      // When multiple is false, suggest all values when showAllSuggestions is true
@@ -344,10 +343,10 @@ const factory = (Chip, Input) => {
 
    renderSuggestions () {
      const { theme } = this.props;
-     var hasPerfectMatch = false;
-     var suggestions = [...this.suggestions()].map(([key, value]) => {
-     var className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
-    if(this.state.query && this.state.query.trim() == key){
+     let hasPerfectMatch = false;
+     let suggestions = [...this.suggestions()].map(([key, value]) => {
+     const className = classnames(theme.suggestion, {[theme.active]: this.state.active === key});
+    if (this.state.query && this.state.query.trim() == key){
       hasPerfectMatch = true;
     }
        return (
@@ -359,18 +358,18 @@ const factory = (Chip, Input) => {
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
-           {this.props.template?this.props.template(value):value}
+           {this.props.template ? this.props.template(value) : value}
          </li>
        );
      });
-    var customClassName = classnames(theme.suggestion, {[theme.active]: this.state.active === this.state.query});
+    const customClassName = classnames(theme.suggestion, {[theme.active]: this.state.active === this.state.query});
 
-     if(!hasPerfectMatch && this.state.query && this.props.allowCreate){
+     if (!hasPerfectMatch && this.state.query && this.props.allowCreate){
         suggestions = [<li
            id={this.state.query}
            key={this.state.query}
            className={customClassName}
-           onMouseDown = {(event)=>{this.select(event,this.state.query)}}
+           onMouseDown = {(event)=>{this.select(event, this.state.query);}}
            onMouseEnter={this.handleSuggestionMouseEnter}
            onMouseLeave={this.handleSuggestionMouseLeave}
          >
@@ -391,15 +390,15 @@ const factory = (Chip, Input) => {
     );
    }
    handleSuggestionsMouseEnter = (event) => {
-    this.setState({showSuggestions:true});
+    this.setState({showSuggestions: true});
    }
    handleSuggestionsMouseLeave = (event) => {
-    this.setState({showSuggestions:false});
+    this.setState({showSuggestions: false});
    }
    handleSuggestionsClick = (event) =>{
     event.preventDefault();
    }
-   renderTemplateValue(value){
+   renderTemplateValue (value){
     const { theme } = this.props;
       const className = classnames(theme.templateField, {
         [theme.errored]: this.props.error,
@@ -438,7 +437,7 @@ const factory = (Chip, Input) => {
            {...other}
            ref={node => { this.inputNode = node; }}
            autoComplete="off"
-           className={classnames(theme.input, {[theme.hidden]:renderTemplate})}
+           className={classnames(theme.input, {[theme.hidden]: renderTemplate})}
            error={error}
            label={label}
            onBlur={this.handleQueryBlur}
@@ -449,8 +448,8 @@ const factory = (Chip, Input) => {
            theme={theme}
            themeNamespace="input"
            value={this.state.query} />
-         {renderTemplate? this.renderTemplateValue(this.source().get(this.props.value)): null }
-         {this.state.focus || this.state.showSuggestions?this.renderSuggestions():null}
+         {renderTemplate ? this.renderTemplateValue(this.source().get(this.props.value)) : null }
+         {this.state.focus || this.state.showSuggestions ? this.renderSuggestions() : null}
          {this.props.selectedPosition === 'below' ? this.renderSelected() : null}
        </div>
      );

@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import CssTransitionGroup from 'react-addons-css-transition-group';
+import PropTypes from 'prop-types';
 import { ZoomIn, ZoomOut } from '../animations';
 import time from '../utils/time.js';
 import Hours from './ClockHours.js';

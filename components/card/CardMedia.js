@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 import { CARD } from '../identifiers.js';
 
 const CardMedia = ({ aspectRatio, children, className, color, contentOverlay, image, theme, ...other }) => {

@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { SLIDER } from '../identifiers.js';
 import events from '../utils/events.js';
 import utils from '../utils/utils.js';

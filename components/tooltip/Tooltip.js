@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Portal from '../hoc/Portal';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
@@ -99,7 +100,7 @@ const tooltipFactory = (options = {}) => {
       deactivate () {
         if (this.timeout) clearTimeout(this.timeout);
         if (this.state.active) {
-          if(this.refs && this.refs.tooltip) events.addEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
+          if (this.refs && this.refs.tooltip) events.addEventListenerOnTransitionEnded(this.refs.tooltip, this.onTransformEnd);
           this.setState({ active: false });
         } else if (this.state.visible) {
           this.setState({ visible: false });
@@ -168,14 +169,13 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleMouseLeave = (event) => {
-        if(this.props.tooltipHideOnHover){
+        if (this.props.tooltipHideOnHover){
               this.deactivate();
-        }
-        else{ // if we don't want to hide tooltip on hover
+        } else { // if we don't want to hide tooltip on hover
           // give timeout
-          if(this.hoverTimeout) clearTimeout(this.hoverTimeout)
+          if (this.hoverTimeout) clearTimeout(this.hoverTimeout);
           this.hoverTimeout = setTimeout(() => {
-            if(!this.state.tooltipHovered){ //check if the mouse enterd the tooltip
+            if (!this.state.tooltipHovered){ //check if the mouse enterd the tooltip
               this.deactivate();
               }
             }, this.props.tooltipHideDelay);
@@ -185,14 +185,14 @@ const tooltipFactory = (options = {}) => {
       };
 
       handleTooltipMouseEnter = (event) => {
-        if(!this.props.tooltipHideOnHover){
-          this.setState({tooltipHovered:true});
+        if (!this.props.tooltipHideOnHover){
+          this.setState({tooltipHovered: true});
         }
       }
 
       handleTooltipMouseLeave = (event) => {
-        if(!this.props.tooltipHideOnHover){
-          this.setState({tooltipHovered:false}, ()=>{
+        if (!this.props.tooltipHideOnHover){
+          this.setState({tooltipHovered: false}, ()=>{
             this.deactivate();
           });
         }
@@ -246,9 +246,9 @@ const tooltipFactory = (options = {}) => {
             {children ? children : null}
             {visible && (
               <Portal>
-                {tooltip !== null?<span ref="tooltip" onMouseEnter={this.handleTooltipMouseEnter} onMouseLeave={this.handleTooltipMouseLeave} className={_className} data-react-toolbox="tooltip" style={{top, left}}>
+                {tooltip !== null ? <span ref="tooltip" onMouseEnter={this.handleTooltipMouseEnter} onMouseLeave={this.handleTooltipMouseLeave} className={_className} data-react-toolbox="tooltip" style={{top, left}}>
                   <span className={theme.tooltipInner}>{tooltip}</span>
-                </span>:null}
+                </span> : null}
               </Portal>
             )}
           </ComposedComponent>

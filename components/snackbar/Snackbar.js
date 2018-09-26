@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { SNACKBAR } from '../identifiers.js';
 import ActivableRenderer from '../hoc/ActivableRenderer.js';
 import InjectOverlay from '../overlay/Overlay.js';

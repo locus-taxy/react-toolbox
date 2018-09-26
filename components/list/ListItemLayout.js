@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { LIST } from '../identifiers.js';
 import FontIcon from '../font_icon/FontIcon.js';
 import InjectAvatar from '../avatar/Avatar.js';

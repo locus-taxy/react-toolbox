@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { NAVIGATION } from '../identifiers.js';
 import InjectButton from '../button/Button.js';
 import InjectLink from '../link/Link.js';

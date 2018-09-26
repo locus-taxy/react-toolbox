@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'react-css-themr';
 import { transform } from 'babel-standalone';
+import PropTypes from 'prop-types';
 import * as ReactToolbox from 'react-toolbox';
 import theme from '../../theme/theme.js';
 import style from './style';
@@ -11,9 +12,9 @@ const ERROR_TIMEOUT = 500;
 
 const Preview = React.createClass({
   propTypes: {
-    className: React.PropTypes.string,
-    code: React.PropTypes.string.isRequired,
-    scope: React.PropTypes.object
+    className: PropTypes.string,
+    code: PropTypes.string.isRequired,
+    scope: PropTypes.object
   },
 
   getDefaultProps () {

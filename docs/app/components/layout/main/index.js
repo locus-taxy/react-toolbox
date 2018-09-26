@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'react-toolbox';
+import PropTypes from 'prop-types';
 import Appbar from '../../../components/appbar';
 import Markdown from '../../../components/markdown';
 import Playground from './components/playground.js';
@@ -22,13 +23,13 @@ const LoadExampleButton = (props) => (
 );
 
 LoadExampleButton.propTypes = {
-  onClick: React.PropTypes.func
+  onClick: PropTypes.func
 };
 
 class Main extends React.Component {
   static propTypes = {
-    onClick: React.PropTypes.func,
-    params: React.PropTypes.object
+    onClick: PropTypes.func,
+    params: PropTypes.object
   };
 
   state = {

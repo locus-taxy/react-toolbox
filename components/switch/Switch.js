@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
+import PropTypes from 'prop-types';
 import { SWITCH } from '../identifiers.js';
 import rippleFactory from '../ripple/Ripple.js';
 import thumbFactory from './Thumb.js';
