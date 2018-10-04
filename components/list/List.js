@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { LIST } from '../identifiers.js';
 import InjectListItem from './ListItem.js';
+import { isComponentOfType } from '../utils/react.js';
 
 const mergeProp = (propName, child, parent) => (
   child[propName] !== undefined
@@ -31,7 +32,7 @@ const factory = (ListItem) => {
 
     renderItems () {
       return React.Children.map(this.props.children, (item) => {
-        if (item.type === ListItem) {
+        if (isComponentOfType(ListItem, item)) {
           const selectable = mergeProp('selectable', item.props, this.props);
           const ripple = mergeProp('ripple', item.props, this.props);
           return React.cloneElement(item, { selectable, ripple });

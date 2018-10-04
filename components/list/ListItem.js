@@ -5,6 +5,7 @@ import { LIST } from '../identifiers.js';
 import InjectListItemContent from './ListItemContent.js';
 import InjectListItemLayout from './ListItemLayout.js';
 import rippleFactory from '../ripple/Ripple.js';
+import { isComponentOfType } from '../utils/react.js';
 
 const factory = (ripple, ListItemLayout, ListItemContent) => {
   class ListItem extends Component {
@@ -51,7 +52,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
           children.ignored.push(strippedChild);
           return;
         }
-        if (child.type === ListItemContent) {
+        if (isComponentOfType(ListItemContent, child)) {
           children.itemContent = strippedChild;
           return;
         }
