@@ -4880,9 +4880,9 @@ rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-react-css-themr@locus-taxy/react-css-themr-legacy:
+react-css-themr@locus-taxy/react-css-themr-legacy#release:
   version "1.8.1"
-  resolved "https://codeload.github.com/locus-taxy/react-css-themr-legacy/tar.gz/cac4f9564fcd71894de2d65860cbb0764f8033b7"
+  resolved "https://codeload.github.com/locus-taxy/react-css-themr-legacy/tar.gz/2cd37ea8b40c838d27b09895679d6f175ba12aaa"
   dependencies:
     invariant "^2.2.1"
 
