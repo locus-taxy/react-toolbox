@@ -55,11 +55,34 @@ const factory = (Tab, TabContent, FontIcon) => {
       if (index !== prevIndex || children !== prevChildren) {
         !disableAnimatedBottomBorder && this.updatePointer(index);
       }
+      if (index !== prevIndex) {
+        this.scrollToTab(index);
+      }
     }
 
     componentWillUnmount () {
       window.removeEventListener('resize', this.handleResize);
       clearTimeout(this.resizeTimeout);
+    }
+
+    scrollToTab (idx) {
+      const activeHeader = this.navigationNode && this.navigationNode.children[idx];
+      if (activeHeader && this.navigationNode) {
+        const { left: hasLeftArrow, right: hasRightArrow } = this.state.arrows;
+        const {width: rightArrowWidth} = hasRightArrow ? this.rightArrow.getBoundingClientRect() : {width: 0};
+        const {width: leftArrowWidth} = hasLeftArrow ? this.leftArrow.getBoundingClientRect() : {width: 0};
+        const activeTab = activeHeader.getBoundingClientRect();
+        const nav = this.navigationNode.getBoundingClientRect();
+
+        let offset = 0;
+
+        if ((activeTab.left + activeTab.width) > nav.left + nav.width - rightArrowWidth) {
+          offset = Math.abs(activeTab.left + activeTab.width - (nav.left + nav.width - rightArrowWidth));
+        } else if (activeTab.left < nav.left + leftArrowWidth) {
+          offset = -Math.abs(activeTab.left - nav.left);
+        }
+        this.navigationNode.scrollLeft += offset;
+      }
     }
 
     handleHeaderClick = (event) => {
@@ -180,14 +203,14 @@ const factory = (Tab, TabContent, FontIcon) => {
       return (
         <div data-react-toolbox='tabs' className={classNames}>
           <div className={theme.navigationContainer}>
-            {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight}>
+            {hasLeftArrow && <div className={theme.arrowContainer} onClick={this.scrollRight} ref={node => {this.leftArrow = node; }}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_left" />
             </div>}
             <nav className={theme.navigation} ref={node => {this.navigationNode = node; }}>
               {this.renderHeaders(headers)}
               <span className={classNamePointer} style={this.state.pointer} />
             </nav>
-            {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft}>
+            {hasRightArrow && <div className={theme.arrowContainer} onClick={this.scrollLeft} ref={node => {this.rightArrow = node; }}>
               <FontIcon className={theme.arrow} value="keyboard_arrow_right" />
             </div>}
           </div>
