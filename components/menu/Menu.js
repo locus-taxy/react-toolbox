@@ -1,10 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers.js';
 import { events, utils } from '../utils';
 import InjectMenuItem from './MenuItem.js';
+import { isComponentOfType } from '../utils/react.js';
 
 const POSITION = {
   AUTO: 'auto',
@@ -186,7 +188,7 @@ const factory = (MenuItem) => {
     renderItems () {
       return React.Children.map(this.props.children, (item) => {
         if (!item) return item;
-        if (item.type === MenuItem) {
+        if (isComponentOfType(MenuItem, item)) {
           return React.cloneElement(item, {
             ripple: item.props.ripple || this.props.ripple,
             selected: typeof item.props.value !== 'undefined' && this.props.selectable && item.props.value === this.props.selected,

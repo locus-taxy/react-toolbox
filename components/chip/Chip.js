@@ -1,8 +1,10 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { CHIP } from '../identifiers.js';
 import InjectAvatar from '../avatar/Avatar.js';
+import { isComponentOfType } from '../utils/react.js';
 
 const factory = (Avatar) => {
   const Chip = ({children, className, deletable, onDeleteClick, theme, ...other}) => {
@@ -10,7 +12,7 @@ const factory = (Avatar) => {
     if (React.Children.count(children)) {
       const flatChildren = React.Children.toArray(children);
       const firstChild = flatChildren[0];
-      hasAvatar = firstChild && firstChild.type && firstChild.type === Avatar;
+      hasAvatar = firstChild && isComponentOfType(Avatar, firstChild);
     }
 
     const classes = classnames(theme.chip, {
