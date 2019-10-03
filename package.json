@@ -42,7 +42,7 @@
     "normalize.css": "^4.2.0",
     "prop-types": "^15.6.0",
     "react-css-themr": "locus-taxy/react-css-themr-legacy#release",
-    "react-hot-loader": "^4.3.11"
+    "react-hot-loader": "^4.12.14"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.4",
