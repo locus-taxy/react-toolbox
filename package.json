@@ -41,8 +41,7 @@
     "immutability-helper": "^2.0.0",
     "normalize.css": "^4.2.0",
     "prop-types": "^15.6.0",
-    "react-css-themr": "locus-taxy/react-css-themr-legacy#release",
-    "react-hot-loader": "^4.12.19"
+    "react-css-themr": "locus-taxy/react-css-themr-legacy#release"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.4",
@@ -120,7 +119,8 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "^0.14 || ~15.4.0 || ^16.5.1",
-    "react-dom": "^0.14.0 || ~15.4.0 || ^16.5.1"
+    "react-dom": "^0.14.0 || ~15.4.0 || ^16.5.1",
+    "react-hot-loader": "^4.12.19"
   },
   "pre-commit": "lint:staged"
 }
