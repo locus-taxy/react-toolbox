@@ -77,7 +77,6 @@ const factory = (Check) => {
             onClick={this.handleToggle}
             ref={node => { this.inputNode = node; }}
             type='checkbox'
-            testid={testid}
           />
           <Check
             checked={checked}
