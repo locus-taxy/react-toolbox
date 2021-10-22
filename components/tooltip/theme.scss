@@ -9,7 +9,7 @@
   display: block;
   max-width: $tooltip-max-width;
   padding: $tooltip-margin;
-  font-family: Roboto, sans-serif;
+  font-family: $preferred-font;
   font-size: $tooltip-font-size;
   font-weight: $font-weight-bold;
   line-height: $font-size-small;
