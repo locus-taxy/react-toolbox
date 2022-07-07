@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "classnames": "~2.2.5",
-    "core-js": "~2.4.0",
+    "core-js": "~2.6.12",
     "react-css-themr": "~1.2.0"
   },
   "devDependencies": {
