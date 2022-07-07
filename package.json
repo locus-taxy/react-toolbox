@@ -36,7 +36,7 @@
     "toolkit"
   ],
   "dependencies": {
-    "classnames": "~2.2.5",
+    "classnames": "~2.3.1",
     "core-js": "~2.4.0",
     "react-css-themr": "~1.2.0"
   },
