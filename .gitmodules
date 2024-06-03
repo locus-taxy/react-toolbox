@@ -1,3 +1,0 @@
-[submodule "packages/google-map-react"]
-	path = packages/google-map-react
-	url = git@github.com:locus-taxy/google-map-react.git
