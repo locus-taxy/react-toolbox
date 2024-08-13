@@ -2,10 +2,16 @@
 This repository accumulation of all the external packages used in the Frontend Dashboard.
 
 ## Packages
-| packages           | locus repo url                                                     |
-|--------------------|--------------------------------------------------------------------|
-| google-map-react   | https://github.com/locus-taxy/google-map-react/tree/locus-master   |
-| fixed-data-table-2 | https://github.com/locus-taxy/fixed-data-table-2/tree/locus-master |
+| # | packages               | locus repo url                                                         |
+|---|------------------------|------------------------------------------------------------------------|
+| 1 | google-map-react       | https://github.com/locus-taxy/google-map-react/tree/locus-master       |
+| 2 | fixed-data-table-2     | https://github.com/locus-taxy/fixed-data-table-2/tree/locus-master     |
+| 3 | react-automata         | https://github.com/locus-taxy/react-automata/tree/locus-master         |
+| 4 | react-big-calendar     | https://github.com/locus-taxy/react-big-calendar/tree/locus-master     |
+| 5 | react-css-themr-legacy | https://github.com/locus-taxy/react-css-themr-legacy/tree/locus-master |
+| 6 | react-grid-layout      | https://github.com/locus-taxy/react-grid-layout/tree/locus-master      |
+| 7 | react-popover          | https://github.com/locus-taxy/react-popover/tree/locus-master          |
+| 8 | react-toolbox          | https://github.com/locus-taxy/react-toolbox/tree/locus-master          |
 
 ## How to add a new package
 We are using git-subtree to manage the external packages. To add a new package, you can use the following command:

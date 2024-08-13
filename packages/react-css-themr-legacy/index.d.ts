@@ -1,0 +1,37 @@
+import * as React from "react";
+
+declare module "react-css-themr"
+{
+	export interface IThemrOptions
+	{
+		/** @default "deeply" */
+		composeTheme?: "deeply" | "softly" | false,
+		/** @default false */
+		withRef?: boolean
+	}
+
+	export interface ThemeProviderProps
+	{
+		theme: {}
+	}
+
+	export class ThemeProvider extends React.Component<ThemeProviderProps, any>
+	{
+
+	}
+
+	interface ThemedComponent<P, S> extends React.Component<P, S>
+	{
+		getWrappedInstance(): React.Component<P, S>;
+	}
+
+  interface ThemedComponentClass<P, S> extends React.ComponentClass<P> {
+    new(props?: P, context?: any): ThemedComponent<P, S>;
+  }
+
+  export function themr(
+    identifier: string | number | symbol,
+    defaultTheme?: {},
+    options?: IThemrOptions
+  ): <P, S>(component: (new(props?: P, context?: any) => React.Component<P, S>) | React.SFC<P>) => ThemedComponentClass<P, S>;
+}
