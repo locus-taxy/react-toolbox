@@ -48,7 +48,7 @@ const factory = (Dialog) => {
       displayTime: new Date(this.props.value.getTime())
     };
 
-    componentWillReceiveProps (nextProps) {
+    UNSAFE_componentWillReceiveProps (nextProps) {
       if (nextProps.value.getTime() !== this.state.displayTime.getTime()) {
         this.setState({ displayTime: new Date(nextProps.value.getTime()) });
       }
