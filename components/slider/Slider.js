@@ -62,7 +62,7 @@ const factory = (ProgressBar, Input) => {
       this.handleResize();
     }
 
-    UNSAFE_componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps (nextProps) {
       if (this.state.inputFocused && this.props.value !== nextProps.value) {
         this.setState({inputValue: this.valueForInput(nextProps.value)});
       }

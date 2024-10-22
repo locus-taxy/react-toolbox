@@ -72,7 +72,7 @@ const factory = (FontIcon) => {
       }
     }
 
-    UNSAFE_componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps (nextProps) {
       if (!this.props.multiline && nextProps.multiline && nextProps.autoResize) {
         window.addEventListener('resize', this.handleAutoresize);
       } else if (this.props.multiline && !nextProps.multiline && !nextProps.autoResize) {

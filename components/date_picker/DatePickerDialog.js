@@ -51,11 +51,11 @@ const factory = (Dialog, Calendar) => {
       date: this.props.value
     };
 
-    UNSAFE_componentWillMount () {
+    componentWillMount () {
       this.updateStateDate(this.props.value);
     }
 
-    UNSAFE_componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps (nextProps) {
       this.updateStateDate(nextProps.value);
     }
 

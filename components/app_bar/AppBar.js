@@ -50,7 +50,7 @@ const factory = (IconButton) => {
       }
     }
 
-    UNSAFE_componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps (nextProps) {
       if (!this.props.scrollHide && nextProps.scrollHide) {
         this.initializeScroll();
       }

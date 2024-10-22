@@ -32,7 +32,7 @@ class Overlay extends Component {
     }
   }
 
-  UNSAFE_componentWillUpdate (nextProps) {
+  componentWillUpdate (nextProps) {
     if (nextProps.active && !this.props.active) document.body.style.overflow = 'hidden';
     if (!nextProps.active && this.props.active && !document.querySelectorAll('[data-react-toolbox="overlay"]')[1]) document.body.style.overflow = '';
   }

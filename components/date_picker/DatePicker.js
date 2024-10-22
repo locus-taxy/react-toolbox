@@ -64,7 +64,7 @@ const factory = (Input, DatePickerDialog) => {
       active: this.props.active
     };
 
-    UNSAFE_componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps (nextProps) {
       if (nextProps.active !== this.props.active && this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }

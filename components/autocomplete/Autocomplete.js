@@ -82,7 +82,7 @@ const factory = (Chip, Input) => {
      isValueAnObject: false
    };
 
-   UNSAFE_componentWillReceiveProps (nextProps) {
+   componentWillReceiveProps (nextProps) {
      if (!this.props.multiple) {
        this.setState({
          query: this.query(nextProps.value)

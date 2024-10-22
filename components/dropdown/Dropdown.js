@@ -57,7 +57,7 @@ const factory = (Input) => {
       up: false
     };
 
-    UNSAFE_componentWillUpdate (nextProps, nextState) {
+    componentWillUpdate (nextProps, nextState) {
       if (!this.state.active && nextState.active) {
         events.addEventsToDocument(this.getDocumentEvents());
       }

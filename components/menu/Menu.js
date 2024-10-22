@@ -68,7 +68,7 @@ const factory = (MenuItem) => {
       });
     }
 
-    UNSAFE_componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps (nextProps) {
       if (this.props.position !== nextProps.position) {
         const position = nextProps.position === POSITION.AUTO
           ? this.calculatePosition()
@@ -105,7 +105,7 @@ const factory = (MenuItem) => {
       }
     }
 
-    UNSAFE_componentWillUpdate (nextProps, nextState) {
+    componentWillUpdate (nextProps, nextState) {
       if (!this.state.active && nextState.active) {
         events.addEventsToDocument({
           click: this.handleDocumentClick,
