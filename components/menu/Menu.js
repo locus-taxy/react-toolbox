@@ -58,6 +58,8 @@ const factory = (MenuItem) => {
       rippled: false
     };
 
+    handleDocumentClickTimeoutId = null;
+
     componentDidMount () {
       this.positionTimeoutHandle = setTimeout(() => {
         const { width, height } = this.refs.menu.getBoundingClientRect();
@@ -107,10 +109,13 @@ const factory = (MenuItem) => {
 
     componentWillUpdate (nextProps, nextState) {
       if (!this.state.active && nextState.active) {
-        events.addEventsToDocument({
-          click: this.handleDocumentClick,
-          touchstart: this.handleDocumentClick
-        });
+        // https://github.com/facebook/react/issues/24657
+        this.handleDocumentClickTimeoutId = setTimeout(() => {
+          events.addEventsToDocument({
+            click: this.handleDocumentClick,
+            touchstart: this.handleDocumentClick
+          });
+        }, 0)
       }
     }
 
@@ -135,6 +140,7 @@ const factory = (MenuItem) => {
       }
       clearTimeout(this.positionTimeoutHandle);
       clearTimeout(this.activateTimeoutHandle);
+      clearTimeout(this.handleDocumentClickTimeoutId);
     }
 
     handleDocumentClick = (event) => {
